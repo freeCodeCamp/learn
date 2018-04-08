@@ -1,4 +1,6 @@
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 const { dasherize } = require('./utils');
 const { viewTypes } = require('./utils/challengeTypes');
 const { blockNameify } = require('./utils/blockNameify');
@@ -83,4 +85,18 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       })
     );
   });
+};
+
+exports.modifyWebpackConfig = ({ config, stage }) => {
+  if (stage === 'build-javascript' || stage === 'develop') {
+    return config.plugin('CopyWebpackPlugin', CopyWebpackPlugin, [
+      [
+        {
+          from: path.resolve(__dirname, './node_modules/monaco-editor/min/vs'),
+          to: 'vs'
+        }
+      ]
+    ]);
+  }
+  return config;
 };
