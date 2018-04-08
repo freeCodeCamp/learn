@@ -87,9 +87,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   });
 };
 
-exports.modifyWebpackConfig = ({ config, stage }) => {
+exports.modifyWebpackConfig = ({ config, stage, babelConfig }) => {
   if (stage === 'build-javascript' || stage === 'develop') {
-    return config.plugin('CopyWebpackPlugin', CopyWebpackPlugin, [
+    config.plugin('CopyWebpackPlugin', CopyWebpackPlugin, [
       [
         {
           from: path.resolve(__dirname, './node_modules/monaco-editor/min/vs'),
@@ -97,6 +97,16 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
         }
       ]
     ]);
+    // remove the default 'js' loader so we can create our own
+    config.removeLoader('js');
+    // these modules are shipped with es6 code, we need to transform them due
+    // to the version of the uglifyjs plugin gatsby is using
+    config.loader('js', {
+      test: /\.jsx?$/,
+      exclude: /(node_modules|bower_components)\/(?!ansi-styles|chalk)/,
+      loader: 'babel',
+      query: babelConfig
+    });
   }
   return config;
 };
