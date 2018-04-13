@@ -28,7 +28,7 @@ const propTypes = {
   submit: PropTypes.func.isRequired
 };
 
-function DynamicForm({
+export function DynamicForm({
   // redux-form
   errors,
   fields,
