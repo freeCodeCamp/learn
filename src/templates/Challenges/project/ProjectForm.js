@@ -61,8 +61,4 @@ export class ProjectForm extends PureComponent {
 
 ProjectForm.propTypes = propTypes;
 
-export default reduxForm({
-  form: 'NewFrontEndProject',
-  fields: frontEndFields,
-  validate: createFormValidator(fieldValidators)
-})(ProjectForm);
+export default ProjectForm;
