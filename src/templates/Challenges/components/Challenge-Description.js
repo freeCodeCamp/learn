@@ -16,15 +16,15 @@ function renderDescription(description) {
       return (
         <div
           dangerouslySetInnerHTML={{ __html: line }}
-          key={ line.slice(-6) + index }
+          key={line.slice(-6) + index}
         />
       );
     }
     return (
       <p
         className='wrappable'
-        dangerouslySetInnerHTML= {{ __html: line }}
-        key={ line.slice(-6) + index }
+        dangerouslySetInnerHTML={{ __html: line }}
+        key={line.slice(-6) + index}
       />
     );
   });
