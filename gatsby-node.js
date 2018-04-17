@@ -2,30 +2,8 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const { dasherize } = require('./utils');
-const { viewTypes } = require('./utils/challengeTypes');
 const { blockNameify } = require('./utils/blockNameify');
-
-const backend = path.resolve(
-  __dirname,
-  './src/templates/Challenges/backend/Show.js'
-);
-const classic = path.resolve(
-  __dirname,
-  './src/templates/Challenges/classic/Show.js'
-);
-const intro = path.resolve(__dirname, './src/templates/Introduction/Intro.js');
-const project = path.resolve(
-  __dirname,
-  './src/templates/Challenges/project/Show.js'
-);
-
-const views = {
-  backend,
-  classic,
-  modern: classic,
-  project
-  // quiz: Quiz
-};
+const { createChallengePages, createIntroPages } = require('./utils/gatsby');
 
 exports.onCreateNode = function onCreateNode({ node, boundActionCreators }) {
   const { createNodeField } = boundActionCreators;
@@ -97,46 +75,14 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         }
 
         // Create challenge pages.
-        result.data.allChallengeNode.edges.forEach((edge, index, thisArray) => {
-          const {
-            fields: { slug },
-            required = [],
-            template,
-            challengeType,
-            id
-          } = edge.node;
-          if (challengeType === 7) {
-            return;
-          }
-          const next = thisArray[index + 1];
-          const nextChallengePath = next ? next.node.fields.slug : '/';
-          createPage({
-            path: slug,
-            component: views[viewTypes[challengeType]],
-            context: {
-              challengeMeta: {
-                challengeType,
-                template,
-                required,
-                nextChallengePath,
-                id
-              },
-              slug
-            }
-          });
-        });
+        result.data.allChallengeNode.edges.forEach(
+          createChallengePages(createPage)
+        );
 
         // Create intro pages
-        result.data.allMarkdownRemark.edges.forEach(edge => {
-          const { fields: { slug } } = edge.node;
-          createPage({
-            path: slug,
-            component: intro,
-            context: {
-              slug
-            }
-          });
-        });
+        result.data.allMarkdownRemark.edges.forEach(
+          createIntroPages(createPage)
+        );
 
         return;
       })
