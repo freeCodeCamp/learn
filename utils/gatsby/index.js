@@ -73,11 +73,12 @@ exports.createChallengePages = createPage => ({ node }, index, thisArray) => {
 };
 
 exports.createIntroPages = createPage => edge => {
-  const { fields: { slug } } = edge.node;
+  const { fields: { slug }, frontmatter: { block } } = edge.node;
   createPage({
     path: slug,
     component: intro,
     context: {
+      block: dasherize(block),
       slug
     }
   });
