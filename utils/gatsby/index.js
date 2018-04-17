@@ -34,8 +34,21 @@ const getNextChallengePath = (node, index, nodeArray) => {
   return next ? next.node.fields.slug : '/';
 };
 const getTemplateComponent = challengeType => views[viewTypes[challengeType]];
-const getIntroIfRequired = ({ suborder, superBlock, block }) =>
-  suborder === 1 ? `/${dasherize(superBlock)}/${dasherize(block)}` : '';
+
+const getIntroIfRequired = (node, index, nodeArray) => {
+  const next = nodeArray[index + 1];
+  const isEndOfBlock = next && next.node.suborder === 1;
+  let nextSuperBlock = '';
+  let nextBlock = '';
+  if (next) {
+    const { superBlock, block } = next.node;
+    nextSuperBlock = superBlock;
+    nextBlock = block;
+  }
+  return isEndOfBlock
+    ? `/${dasherize(nextSuperBlock)}/${dasherize(nextBlock)}`
+    : '';
+};
 
 exports.createChallengePages = createPage => ({ node }, index, thisArray) => {
   const { fields: { slug }, required = [], template, challengeType, id } = node;

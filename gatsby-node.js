@@ -44,6 +44,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                   slug
                 }
                 id
+                order
                 required {
                   link
                   raw
@@ -51,6 +52,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 }
                 suborder
                 superBlock
+                superOrder
                 template
               }
             }
