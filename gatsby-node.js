@@ -38,17 +38,20 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           allChallengeNode(sort: { fields: [superOrder, order, suborder] }) {
             edges {
               node {
+                block
                 challengeType
+                fields {
+                  slug
+                }
                 id
                 required {
                   link
                   raw
                   src
                 }
+                suborder
+                superBlock
                 template
-                fields {
-                  slug
-                }
               }
             }
           }
