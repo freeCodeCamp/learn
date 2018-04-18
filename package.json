@@ -18,6 +18,7 @@
     "gatsby": "^1.9.243",
     "gatsby-link": "^1.6.39",
     "gatsby-plugin-google-fonts": "^0.0.4",
+    "gatsby-plugin-offline": "^1.0.15",
     "gatsby-plugin-react-helmet": "^2.0.8",
     "gatsby-plugin-react-next": "^1.0.11",
     "gatsby-plugin-sitemap": "^1.2.21",
@@ -65,6 +66,7 @@
     "lint:src": "eslint ./src . --fix",
     "lint:utils": "eslint ./utils . --fix",
     "pretty": "yarn format && yarn lint",
+    "serve": "gatsby serve",
     "test": "yarn format && jest src",
     "test:watch": "jest --watch src"
   },
