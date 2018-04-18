@@ -66,7 +66,6 @@
     "lint:src": "eslint ./src . --fix",
     "lint:utils": "eslint ./utils . --fix",
     "pretty": "yarn format && yarn lint",
-    "serve": "gatsby serve",
     "test": "yarn format && jest src",
     "test:watch": "jest --watch src"
   },
