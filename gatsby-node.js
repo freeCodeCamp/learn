@@ -127,7 +127,8 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
     config.plugin('DefinePlugin', webpack.DefinePlugin, [
       {
         AUTH0_DOMAIN: JSON.stringify(process.env.AUTH0_DOMAIN),
-        AUTH0_CLIENT_ID: JSON.stringify(process.env.AUTH0_CLIENT_ID)
+        AUTH0_CLIENT_ID: JSON.stringify(process.env.AUTH0_CLIENT_ID),
+        AUTH0_NAMESPACE: JSON.stringify(process.env.AUTH0_NAMESPACE)
       }
     ]);
   });

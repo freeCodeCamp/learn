@@ -1,17 +1,23 @@
-/* global AUTH0_DOMAIN AUTH0_CLIENT_ID */
+/* global AUTH0_DOMAIN AUTH0_CLIENT_ID AUTH0_NAMESPACE*/
 import auth0 from 'auth0-js';
 import { navigateTo } from 'gatsby-link';
 
+const namespace = AUTH0_NAMESPACE;
+const domain = AUTH0_DOMAIN;
+const clientID = AUTH0_CLIENT_ID;
+
 class Auth {
   constructor() {
-    this.auth0 = new auth0.WebAuth({
-      domain: AUTH0_DOMAIN,
-      clientID: AUTH0_CLIENT_ID,
-      redirectUri: 'http://localhost:8000/auth-callback',
-      audience: `https://${AUTH0_DOMAIN}/api/v2/`,
-      responseType: 'token id_token',
-      scope: 'openid profile email'
-    });
+  this.auth0 = new auth0.WebAuth({
+    domain,
+    clientID,
+    redirectUri: `${
+      typeof window !== 'undefined' ? window.location.origin : ''
+    }/auth-callback`,
+    audience: `https://${domain}/api/v2/`,
+    responseType: 'token id_token',
+    scope: `openid profile email ${namespace + 'accountLinkId'}`
+  });
 
     this.getUser = this.getUser.bind(this);
     this.getToken = this.getToken.bind(this);
