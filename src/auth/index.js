@@ -1,5 +1,5 @@
 /* global AUTH0_DOMAIN AUTH0_CLIENT_ID AUTH0_NAMESPACE*/
-import auth0 from 'auth0-js';
+import auth0 from 'auth0-js/build/auth0';
 import { navigateTo } from 'gatsby-link';
 
 const namespace = AUTH0_NAMESPACE;
