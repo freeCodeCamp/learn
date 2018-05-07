@@ -50,9 +50,9 @@ export class ProjectForm extends PureComponent {
         id={isFrontEnd ? 'front-end-form' : 'back-end-form'}
         options={options}
         submit={this.handleSubmit}
-        validate={createFormValidator(
-          isFrontEnd ? fieldValidators : backEndFieldValidators
-        )}
+        // validate={createFormValidator(
+        //   isFrontEnd ? fieldValidators : backEndFieldValidators
+        // )}
       />
     );
   }
