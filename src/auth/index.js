@@ -2,7 +2,6 @@
 import auth0 from 'auth0-js';
 import { navigateTo } from 'gatsby-link';
 
-console.log(AUTH0_DOMAIN, AUTH0_CLIENT_ID);
 class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
@@ -33,10 +32,15 @@ class Auth {
       localStorage.removeItem('id_token'),
       localStorage.removeItem('expires_at'),
       localStorage.removeItem('user')
-    ]);
+    ]).then(
+      () =>
+        typeof window !== 'undefined'
+          ? window.location.reload()
+          : navigateTo('/#')
+    );
   }
 
-  handleAuthentication() {
+  handleAuthentication({ updateUserSignedIn, fetchUserComplete }) {
     if (typeof window !== 'undefined') {
       this.auth0.parseHash((err, authResult) => {
         if (err) {
@@ -44,7 +48,15 @@ class Auth {
           return navigateTo('/strange-place');
         }
         if (authResult && authResult.accessToken && authResult.idToken) {
-          return this.setSession(authResult).then(() => navigateTo('/'));
+          return (
+            this.setSession(authResult)
+              .then(user => {
+                updateUserSignedIn(true);
+                return fetchUserComplete(user);
+              })
+              // this could be current-challenge
+              .then(() => navigateTo('/#'))
+          );
         }
         return navigateTo('/strange-place');
       });
@@ -54,9 +66,6 @@ class Auth {
   isAuthenticated() {
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     const isAuth = new Date().getTime() < expiresAt;
-    if (!isAuth) {
-      this.logout();
-    }
     return isAuth;
   }
 
@@ -64,23 +73,20 @@ class Auth {
     const expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
     );
-    const userInfo = new Promise((resolve, reject) => {
+    localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('expires_at', expiresAt);
+
+    return new Promise((resolve, reject) => {
       this.auth0.client.userInfo(authResult.accessToken, (err, user) => {
         if (err) {
           // TODO: Decide what we want to do here
           reject(err);
         }
-        console.log(user);
         localStorage.setItem('user', JSON.stringify(user));
-        resolve();
+        resolve(user);
       });
     });
-    return Promise.all([
-      userInfo,
-      localStorage.setItem('access_token', authResult.accessToken),
-      localStorage.setItem('id_token', authResult.idToken),
-      localStorage.setItem('expires_at', expiresAt)
-    ]);
   };
 
   getUser() {
@@ -96,4 +102,4 @@ class Auth {
   }
 }
 
-export default new Auth();
+export const auth = new Auth();

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import auth from '../../../auth';
+import { auth } from '../../../auth';
 import {
   fetchUserComplete,
   isSignedInSelector,
@@ -34,7 +34,6 @@ const propTypes = {
 class UserState extends PureComponent {
   componentDidMount() {
     const isAuth = auth.isAuthenticated();
-    console.log('cdm', isAuth);
     if (isAuth) {
       this.props.fetchUserComplete(auth.getUser());
     }
@@ -43,15 +42,15 @@ class UserState extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const isAuth = auth.isAuthenticated();
-    console.log('cud', prevProps.isSignedIn, this.props.isSignedIn, isAuth);
     if (prevProps.isSignedIn && !isAuth) {
+      this.props.fetchUserComplete(auth.getUser());
       this.props.updateUserSignedIn(isAuth);
     }
   }
 
   render() {
     const { isSignedIn, name, email } = this.props;
-    return isSignedIn ? (
+    return isSignedIn && (name || email) ? (
       <SignedIn email={email} logout={auth.logout} name={name} />
     ) : (
       <Login login={auth.login} />
