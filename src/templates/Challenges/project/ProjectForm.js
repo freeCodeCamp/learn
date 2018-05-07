@@ -2,10 +2,10 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Form,
-  isValidURL,
-  makeRequired,
-  createFormValidator
+  Form
+  // isValidURL,
+  // makeRequired,
+  // createFormValidator
 } from '../../../components/formHelpers';
 
 const propTypes = {
@@ -16,14 +16,14 @@ const propTypes = {
 const frontEndFields = ['solution'];
 const backEndFields = ['solution', 'githubLink'];
 
-const fieldValidators = {
-  solution: makeRequired(isValidURL)
-};
+// const fieldValidators = {
+//   solution: makeRequired(isValidURL)
+// };
 
-const backEndFieldValidators = {
-  ...fieldValidators,
-  githubLink: makeRequired(isValidURL)
-};
+// const backEndFieldValidators = {
+//   ...fieldValidators,
+//   githubLink: makeRequired(isValidURL)
+// };
 
 const options = {
   types: {
