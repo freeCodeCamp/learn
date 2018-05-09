@@ -5,16 +5,27 @@ import { connect } from 'react-redux';
 
 import Helmet from 'react-helmet';
 
+import { randomCompliment } from '../utils/get-words';
+
 import { ChallengeNode } from '../../../redux/propTypes';
 import SidePanel from './Side-Panel';
 import ToolPanel from './Tool-Panel';
 import HelpModal from '../components/HelpModal';
 import { bindActionCreators } from 'redux';
-import { updateChallengeMeta, createFiles } from '../redux';
+import {
+  updateChallengeMeta,
+  createFiles,
+  updateSuccessMessage
+} from '../redux';
 
 const mapStateToProps = () => ({});
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ updateChallengeMeta, createFiles }, dispatch);
+  bindActionCreators(
+    {
+      updateChallengeMeta,
+      createFiles,
+      updateSuccessMessage
+    }, dispatch);
 
 const propTypes = {
   createFiles: PropTypes.func.isRequired,
@@ -24,7 +35,8 @@ const propTypes = {
   pathContext: PropTypes.shape({
     challengeMeta: PropTypes.object
   }),
-  updateChallengeMeta: PropTypes.func.isRequired
+  updateChallengeMeta: PropTypes.func.isRequired,
+  updateSuccessMessage: PropTypes.func.isRequired
 };
 
 export class Project extends PureComponent {
@@ -33,9 +45,11 @@ export class Project extends PureComponent {
       createFiles,
       data: { challengeNode: { title } },
       pathContext: { challengeMeta },
-      updateChallengeMeta
+      updateChallengeMeta,
+      updateSuccessMessage
     } = this.props;
     createFiles({});
+    updateSuccessMessage(randomCompliment());
     return updateChallengeMeta({ ...challengeMeta, title });
   }
 
@@ -45,8 +59,10 @@ export class Project extends PureComponent {
       createFiles,
       data: { challengeNode: { title: currentTitle } },
       pathContext: { challengeMeta },
-      updateChallengeMeta
+      updateChallengeMeta,
+      updateSuccessMessage
     } = this.props;
+    updateSuccessMessage(randomCompliment());
     if (prevTitle !== currentTitle) {
       createFiles({});
       updateChallengeMeta({ ...challengeMeta, title: currentTitle });
