@@ -2,8 +2,8 @@
 
 Prerequistits| Minimum Version
 |---|---|
-node | 8.0.0
-yarn | 1.3.0
+node | ^8.11.x
+[yarn](https://yarnpkg.com/en/) | ^1.3.0
 
 
 1. Fork the repo
