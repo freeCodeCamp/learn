@@ -27,7 +27,14 @@ const propTypes = {
 };
 
 export class Block extends PureComponent {
-  handleBlockClick = () => {
+  constructor(...props) {
+    super(...props);
+
+    this.handleBlockClick = this.handleBlockClick.bind(this);
+    this.renderChallenges = this.renderChallenges.bind(this);
+  }
+
+  handleBlockClick() {
     const { blockDashedName, challenges, toggleBlock } = this.props;
     const blockPath = challenges[0].fields.slug
       .split('/')
@@ -35,7 +42,7 @@ export class Block extends PureComponent {
       .join('/');
     toggleBlock(blockDashedName);
     return navigateTo(blockPath);
-  };
+  }
 
   renderChallenges(challenges) {
     // TODO: Split this into a Challenge Component and add tests
