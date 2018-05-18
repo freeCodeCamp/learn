@@ -9,7 +9,6 @@ import { ChallengeNode } from '../../redux/propTypes';
 import Map from '../Map';
 import { toggleMapModal, isMapModalOpenSelector } from '../../redux/app';
 
-import './map-modal.css';
 import Spacer from '../util/Spacer';
 
 const mapStateToProps = createSelector(isMapModalOpenSelector, show => ({
@@ -27,8 +26,13 @@ const propTypes = {
 
 function MapModal({ nodes, show, toggleMapModal }) {
   return (
-    <Modal bsSize='lg' onHide={toggleMapModal} show={show}>
-      <Modal.Header className='map-modal-header' closeButton={true}>
+    <Modal
+      bsSize='lg'
+      className='map-modal'
+      onHide={toggleMapModal}
+      show={show}
+      >
+      <Modal.Header className='map-modal-header fcc-modal' closeButton={true}>
         <Modal.Title className='text-center'>
           A Map to Learn to Code
         </Modal.Title>

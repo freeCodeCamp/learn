@@ -27,7 +27,7 @@ function Output({ output, defaultOutput, height }) {
       <base href='/' />
       <MonacoEditor
         className='challenge-output'
-        height={!!height && height}
+        height={height}
         options={options}
         value={output ? output : defaultOutput}
       />

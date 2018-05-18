@@ -67,7 +67,10 @@ export class CompletionModal extends PureComponent {
         onKeyDown={isOpen ? handleKeypress : noop}
         show={isOpen}
         >
-        <Modal.Header className='challenge-list-header' closeButton={true}>
+        <Modal.Header
+          className='challenge-list-header fcc-modal'
+          closeButton={true}
+          >
           <Modal.Title className='text-center'>{message}</Modal.Title>
         </Modal.Header>
         <Modal.Body className='completion-modal-body'>

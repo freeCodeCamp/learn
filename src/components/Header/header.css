@@ -1,3 +1,10 @@
+header {
+  top: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 200;
+}
+
 #top-nav {
   background: #006400;
   margin-bottom: 0.45rem;

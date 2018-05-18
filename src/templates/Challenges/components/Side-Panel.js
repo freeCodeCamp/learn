@@ -24,17 +24,9 @@ const mapDispatchToProps = dispatch =>
 
 const propTypes = {
   description: PropTypes.arrayOf(PropTypes.string),
-  executeChallenge: PropTypes.func.isRequired,
   guideUrl: PropTypes.string,
   initConsole: PropTypes.func.isRequired,
   openHelpModal: PropTypes.func.isRequired,
-  output: PropTypes.string,
-  tests: PropTypes.arrayOf(
-    PropTypes.shape({
-      text: PropTypes.string,
-      testString: PropTypes.string
-    })
-  ),
   title: PropTypes.string
 };
 

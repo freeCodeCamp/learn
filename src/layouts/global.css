@@ -2,7 +2,6 @@ html {
   font-family: 'Lato', sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
-  overflow-y: hidden;
 }
 body {
   margin: 0;
@@ -188,7 +187,6 @@ textarea {
 html {
   font: 112.5%/1.45em georgia, serif;
   box-sizing: border-box;
-  overflow-y: hidden;
 }
 * {
   box-sizing: inherit;
@@ -624,4 +622,15 @@ pre tt:after {
   html {
     font-size: 100%;
   }
+}
+
+.fcc-modal {
+  background-color: #006400;
+  color: #fff;
+}
+
+.fcc-modal .close {
+  color: #fff;
+  font-size: 28px;
+  text-shadow: none;
 }

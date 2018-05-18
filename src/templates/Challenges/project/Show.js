@@ -8,6 +8,7 @@ import Helmet from 'react-helmet';
 import { randomCompliment } from '../utils/get-words';
 
 import { ChallengeNode } from '../../../redux/propTypes';
+import ProjectForm from './ProjectForm';
 import SidePanel from './Side-Panel';
 import ToolPanel from './Tool-Panel';
 import CompletionModal from '../components/CompletionModal';
@@ -16,8 +17,10 @@ import { bindActionCreators } from 'redux';
 import {
   updateChallengeMeta,
   createFiles,
-  updateSuccessMessage
+  updateSuccessMessage,
+  openModal
 } from '../redux';
+import { frontEndProject } from '../../../../utils/challengeTypes';
 
 import './project.css';
 
@@ -27,7 +30,8 @@ const mapDispatchToProps = dispatch =>
     {
       updateChallengeMeta,
       createFiles,
-      updateSuccessMessage
+      updateSuccessMessage,
+      openCompletionModal: () => openModal('completion')
     },
     dispatch
   );
@@ -37,6 +41,7 @@ const propTypes = {
   data: PropTypes.shape({
     challengeNode: ChallengeNode
   }),
+  openCompletionModal: PropTypes.func.isRequired,
   pathContext: PropTypes.shape({
     challengeMeta: PropTypes.object
   }),
@@ -84,12 +89,15 @@ export class Project extends PureComponent {
           description,
           guideUrl
         }
-      }
+      },
+      openCompletionModal
     } = this.props;
+    const isFrontEnd = challengeType === frontEndProject;
     const blockNameTitle = `${blockName} - ${title}`;
     return (
       <Fragment>
         <Helmet title={`${blockNameTitle} | Learn freeCodeCamp}`} />
+        <ToolPanel />
         <div className='project-show-wrapper'>
           <SidePanel
             className='full-height'
@@ -97,7 +105,10 @@ export class Project extends PureComponent {
             guideUrl={guideUrl}
             title={blockNameTitle}
           />
-          <ToolPanel challengeType={challengeType} />
+          <ProjectForm
+            isFrontEnd={isFrontEnd}
+            openModal={openCompletionModal}
+          />
         </div>
         <CompletionModal />
         <HelpModal />

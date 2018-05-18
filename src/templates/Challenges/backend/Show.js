@@ -10,6 +10,7 @@ import ChallengeDescription from '../components/Challenge-Description';
 import TestSuite from '../components/Test-Suite';
 import Output from '../components/Output';
 import CompletionModal from '../components/CompletionModal';
+import ProjectToolPanel from '../project/Tool-Panel';
 import {
   executeChallenge,
   challengeTestsSelector,
@@ -118,6 +119,7 @@ export class BackEnd extends PureComponent {
     const blockNameTitle = `${blockName} - ${title}`;
     return (
       <Row>
+        <ProjectToolPanel />
         <Col xs={6} xsOffset={3}>
           <Spacer />
           <div>
