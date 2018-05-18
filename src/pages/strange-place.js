@@ -1,13 +1,18 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import Panel from 'react-bootstrap/lib/Panel';
 
 import './strange-place.css';
+import { allAppDataSelector } from '../redux/app';
+
+const mapStateToProps = createSelector(allAppDataSelector, state => ({
+  state
+}));
 
 const propTypes = {};
 
-function StrangePlace(props) {
-  console.log(props);
+function StrangePlace() {
   return (
     <div className='strange-place-container'>
       <Panel bsStyle='primary'>
@@ -31,4 +36,4 @@ function StrangePlace(props) {
 StrangePlace.displayName = 'StrangePlace';
 StrangePlace.propTypes = propTypes;
 
-export default StrangePlace;
+export default connect(mapStateToProps)(StrangePlace);

@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import { kebabCase, startCase } from 'lodash';
 import PropTypes from 'prop-types';
 import {
   Alert,
@@ -45,13 +45,13 @@ function FormFields(props) {
         .filter(field => !ignored.includes(field))
         .map(key => fields[key])
         .map(({ name, onChange, value, pristine }) => {
-          const key = _.kebabCase(name);
+          const key = kebabCase(name);
           const type = name in types ? types[name] : 'text';
           return (
             <div className='inline-form-field' key={key}>
               <Col sm={3} xs={12}>
                 {type === 'hidden' ? null : (
-                  <ControlLabel htmlFor={key}>{_.startCase(name)}</ControlLabel>
+                  <ControlLabel htmlFor={key}>{startCase(name)}</ControlLabel>
                 )}
               </Col>
               <Col sm={9} xs={12}>

@@ -29,9 +29,9 @@ function renderMenuItems({ edges = [] }) {
 function IntroductionPage({ data: { markdownRemark, allChallengeNode } }) {
   const { html, frontmatter: { block } } = markdownRemark;
   const firstLesson = allChallengeNode && allChallengeNode.edges[0].node;
-  const firstLessonPath = firstLesson ?
-    firstLesson.fields.slug :
-    '/strange-place';
+  const firstLessonPath = firstLesson
+    ? firstLesson.fields.slug
+    : '/strange-place';
   return (
     <Fragment>
       <Helmet>
@@ -55,7 +55,7 @@ function IntroductionPage({ data: { markdownRemark, allChallengeNode } }) {
       <FullWidthRow>
         <h2 className='intro-toc-title'>Upcoming Lessons</h2>
         <ListGroup className='intro-toc'>
-          { allChallengeNode ? renderMenuItems(allChallengeNode) : null }
+          {allChallengeNode ? renderMenuItems(allChallengeNode) : null}
         </ListGroup>
       </FullWidthRow>
     </Fragment>
