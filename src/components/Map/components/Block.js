@@ -55,10 +55,7 @@ export class Block extends PureComponent {
     // TODO: Split this into a Challenge Component and add tests
     return challenges.map(challenge => (
       <li className='map-challenge-title' key={challenge.dashedName}>
-        <Link
-          onClick={this.handleChallengeClick}
-          to={challenge.fields.slug}
-          >
+        <Link onClick={this.handleChallengeClick} to={challenge.fields.slug}>
           {challenge.title}
         </Link>
       </li>
