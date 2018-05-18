@@ -19,6 +19,8 @@ import {
   updateSuccessMessage
 } from '../redux';
 
+import './project.css';
+
 const mapStateToProps = () => ({});
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -88,13 +90,15 @@ export class Project extends PureComponent {
     return (
       <Fragment>
         <Helmet title={`${blockNameTitle} | Learn freeCodeCamp}`} />
-        <SidePanel
-          className='full-height'
-          description={description}
-          guideUrl={guideUrl}
-          title={blockNameTitle}
-        />
-        <ToolPanel challengeType={challengeType} />
+        <div className='project-show-wrapper'>
+          <SidePanel
+            className='full-height'
+            description={description}
+            guideUrl={guideUrl}
+            title={blockNameTitle}
+          />
+          <ToolPanel challengeType={challengeType} />
+        </div>
         <CompletionModal />
         <HelpModal />
       </Fragment>

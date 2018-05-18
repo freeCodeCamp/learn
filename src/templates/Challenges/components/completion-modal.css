@@ -1,0 +1,22 @@
+.challenge-list-header {
+  background-color: #006400;
+  color: #fff;
+}
+.challenge-list-header .close {
+  color: #fff;
+  font-size: 28px;
+  text-shadow: none;
+}
+
+.completion-modal-body {
+  height: 45vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-icon-wrapper > svg {
+  height: 30vh;
+  width: 30vh;
+}
+
