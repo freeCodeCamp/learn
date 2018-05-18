@@ -12,7 +12,7 @@ import { toggleMapModal } from '../redux/app';
 
 import './index.css';
 
-const mapStateToProps = () => {};
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ toggleMapModal }, dispatch);
