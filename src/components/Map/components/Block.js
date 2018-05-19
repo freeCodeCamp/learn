@@ -88,13 +88,12 @@ export class Block extends PureComponent {
 
   render() {
     const { challenges, isExpanded, intro } = this.props;
-    const { blockDashedName } = challenges[0].fields;
-    console.log(intro);
+    const { blockName } = challenges[0].fields;
     return (
       <li className={`block ${isExpanded ? 'open' : ''}`}>
         <div className='map-title' onClick={this.handleBlockClick}>
           <Caret />
-          <h5>{blockDashedName}</h5>
+          <h5>{blockName}</h5>
         </div>
         <ul>{isExpanded ? this.renderChallenges(intro, challenges) : null}</ul>
       </li>
