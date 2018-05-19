@@ -10,7 +10,7 @@ exports.onCreateNode = function onCreateNode({ node, boundActionCreators }) {
   if (node.internal.type === 'ChallengeNode') {
     const { tests = [], block, title, superBlock } = node;
 
-    const slug = `/${dasherize(superBlock)}/${dasherize(block)}/${dasherize(
+    const slug = `/${dasherize(block)}/${dasherize(
       title
     )}`;
     createNodeField({ node, name: 'slug', value: slug });
