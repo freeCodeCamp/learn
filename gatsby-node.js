@@ -117,7 +117,7 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
       exclude: modulePath => {
         return (
           /node_modules/.test(modulePath) &&
-          !(/node_modules\/(ansi-styles|chalk)/).test(modulePath)
+          !(/node_modules\/(ansi\-styles|chalk|react\-freecodecamp\-search)/).test(modulePath)
         );
       },
       loader: 'babel',
