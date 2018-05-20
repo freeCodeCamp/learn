@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import MonacoEditor from 'react-monaco-editor';
 
@@ -21,18 +21,42 @@ const options = {
   wordWrap: 'on'
 };
 
-function Output({ output, defaultOutput, height }) {
-  return (
-    <Fragment>
-      <base href='/' />
-      <MonacoEditor
-        className='challenge-output'
-        height={height}
-        options={options}
-        value={output ? output : defaultOutput}
-      />
-    </Fragment>
-  );
+class Output extends PureComponent {
+  constructor(...props) {
+    super();
+
+    this._editor = null;
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.resizeOutput);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.resizeOutput);
+  }
+
+  editorDidMount(editor, monaco) {
+    this._editor = editor;
+  }
+
+  resizeOutput = () => this._editor.layout();
+
+  render() {
+    const { output, defaultOutput, height } = this.props;
+    return (
+      <Fragment>
+        <base href='/' />
+        <MonacoEditor
+          className='challenge-output'
+          height={height}
+          options={options}
+          value={output ? output : defaultOutput}
+          editorDidMount={::this.editorDidMount}
+        />
+      </Fragment>
+    );
+  }
 }
 
 Output.displayName = 'Output';

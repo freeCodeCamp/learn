@@ -85,6 +85,28 @@ const propTypes = {
 };
 
 class ShowClassic extends PureComponent {
+  constructor() {
+    super()
+    this.resizeProps = {
+      // onStopResize: this.onStopResize.bind(this),
+      onResize: this.onResize.bind(this)
+    }
+  }
+
+  onResize(e) {
+    if (e.domElement) {
+      // e.domElement.classList.add('resizing');
+      this.forceUpdate();
+    }
+  }
+
+  // onStopResize(e) {
+  //   if (e.domElement) {
+  //     // e.domElement.classList.remove('resizing');
+  //     // console.log('stop working')
+  //   }
+  // }
+
   componentDidMount() {
     const {
       challengeMounted,
@@ -100,6 +122,7 @@ class ShowClassic extends PureComponent {
     updateChallengeMeta({ ...challengeMeta, title });
     updateSuccessMessage(randomCompliment());
     challengeMounted(challengeMeta.id);
+    // window.addEventListener("resize", this.resizeEditor.bind(this));
   }
 
   componentDidUpdate(prevProps) {
@@ -183,7 +206,7 @@ class ShowClassic extends PureComponent {
             />
           </ReflexElement>
           <ReflexSplitter />
-          <ReflexElement flex={1}>
+          <ReflexElement flex={1} {...this.resizeProps}>
             <ReflexContainer orientation='horizontal'>
               {editors}
             </ReflexContainer>
