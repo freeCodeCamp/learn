@@ -49,7 +49,7 @@ const IndexPage = ({
       We recommend you start at the beginning{' '}
       <Link to={slug}>{`${blockName} -> ${title}`}</Link>
     </p>
-    <h3>Want to see what we can offer?</h3>
+    <h3>Want to dive into our curriculum?</h3>
     <Button block={true} bsSize='lg' bsStyle='primary' onClick={toggleMapModal}>
       Explore the curriculum
     </Button>
