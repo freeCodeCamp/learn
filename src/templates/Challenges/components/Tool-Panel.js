@@ -14,6 +14,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       executeChallenge,
+      openHelpModal: () => openModal('help'),
       openResetModal: () => openModal('reset'),
       toggleMapModal
     },
@@ -22,11 +23,19 @@ const mapDispatchToProps = dispatch =>
 
 const propTypes = {
   executeChallenge: PropTypes.func.isRequired,
+  guideUrl: PropTypes.string,
+  openHelpModal: PropTypes.func.isRequired,
   openResetModal: PropTypes.func.isRequired,
   toggleMapModal: PropTypes.func.isRequired
 };
 
-function ToolPanel({ executeChallenge, openResetModal, toggleMapModal }) {
+function ToolPanel({
+  executeChallenge,
+  openHelpModal,
+  openResetModal,
+  toggleMapModal,
+  guideUrl
+}) {
   return (
     <div className='tool-panel'>
       <div id='left-tool-panel sub-panel'>
@@ -42,7 +51,27 @@ function ToolPanel({ executeChallenge, openResetModal, toggleMapModal }) {
           Reset All Code
         </Button>
       </div>
-      <div id='right-tool-panel sub-panel' />
+      <div id='right-tool-panel sub-panel'>
+        {guideUrl ? (
+          <Button
+            block={true}
+            bsStyle='primary'
+            className='btn-big'
+            href={guideUrl}
+            target='_blank'
+            >
+            Get a hint
+          </Button>
+        ) : null}
+        <Button
+          block={true}
+          bsStyle='primary'
+          className='btn-big'
+          onClick={openHelpModal}
+          >
+          Ask for help on the forum
+        </Button>
+      </div>
     </div>
   );
 }
