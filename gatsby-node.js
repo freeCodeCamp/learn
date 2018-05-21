@@ -114,15 +114,16 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
   return generateBabelConfig(program, stage).then(babelConfig => {
     config.removeLoader('js').loader('js', {
       test: /\.jsx?$/,
+      /* eslint-disable max-len */
       exclude: modulePath => {
         return (
           /node_modules/.test(modulePath) &&
-          !(
-            (/(ansi-styles|chalk|strict-uri-encode|react-freecodecamp-search)/)
-              .test(modulePath)
+          !(/(ansi-styles|chalk|strict-uri-encode|react-freecodecamp-search)/).test(
+            modulePath
           )
         );
       },
+      /* eslint-enable max-len*/
       loader: 'babel',
       query: babelConfig
     });
