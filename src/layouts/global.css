@@ -646,6 +646,10 @@ pre tt:after {
   border-color: #006400;
 }
 
+.btn-primary-invert.btn-primary:hover {
+  color: #fff;
+}
+
 .btn-primary-link > a {
   color: #fff;
 }

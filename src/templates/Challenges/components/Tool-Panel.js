@@ -38,12 +38,16 @@ function ToolPanel({
 }) {
   return (
     <div className='tool-panel'>
-      <div id='left-tool-panel sub-panel'>
-        <Button bsStyle='default' onClick={toggleMapModal}>
+      <div id='left-tool-panel'>
+        <Button
+          bsStyle='primary'
+          className='btn-primary-invert'
+          onClick={toggleMapModal}
+          >
           View the Curriculum
         </Button>
       </div>
-      <div id='centre-tool-panel sub-panel'>
+      <div id='centre-tool-panel'>
         <Button bsStyle='primary' onClick={executeChallenge}>
           Run the Tests
         </Button>
@@ -51,12 +55,12 @@ function ToolPanel({
           Reset All Code
         </Button>
       </div>
-      <div id='right-tool-panel sub-panel'>
+      <div id='right-tool-panel'>
         {guideUrl ? (
           <Button
             block={true}
             bsStyle='primary'
-            className='btn-big'
+            className='btn-primary-invert'
             href={guideUrl}
             target='_blank'
             >
@@ -66,10 +70,10 @@ function ToolPanel({
         <Button
           block={true}
           bsStyle='primary'
-          className='btn-big'
+          className='btn-primary-invert'
           onClick={openHelpModal}
           >
-          Ask for help on the forum
+          Ask for help
         </Button>
       </div>
     </div>
