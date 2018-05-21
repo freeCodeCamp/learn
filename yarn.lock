@@ -8622,9 +8622,9 @@ react-error-overlay@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
 
-react-freecodecamp-search@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/react-freecodecamp-search/-/react-freecodecamp-search-2.0.1.tgz#f11a18d790f3623fbe3e74c12b40106433ff152d"
+react-freecodecamp-search@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-freecodecamp-search/-/react-freecodecamp-search-2.0.2.tgz#2fde10f5a44b1aa15e6a6b8f932d6435eb284f32"
   dependencies:
     query-string "^6.0.0"
     react-instantsearch "^5.0.1"

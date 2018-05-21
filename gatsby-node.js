@@ -117,7 +117,10 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
       exclude: modulePath => {
         return (
           /node_modules/.test(modulePath) &&
-          !(/node_modules\/(ansi\-styles|chalk|react\-freecodecamp\-search)/).test(modulePath)
+          !(
+            (/(ansi-styles|chalk|strict-uri-encode|react-freecodecamp-search)/)
+              .test(modulePath)
+          )
         );
       },
       loader: 'babel',
@@ -145,6 +148,7 @@ exports.modifyBabelrc = ({ babelrc }) =>
   Object.assign({}, babelrc, {
     plugins: babelrc.plugins.concat([
       [
+        'transform-es2015-arrow-functions',
         'transform-imports',
         {
           'react-bootstrap': {
