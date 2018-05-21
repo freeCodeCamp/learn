@@ -8,6 +8,7 @@ import { executeChallenge, updateFile } from '../redux';
 
 const propTypes = {
   contents: PropTypes.string,
+  dimensions: PropTypes.object,
   executeChallenge: PropTypes.func.isRequired,
   ext: PropTypes.string,
   fileKey: PropTypes.string,
@@ -49,13 +50,8 @@ class Editor extends PureComponent {
     this.focusEditor = this.focusEditor.bind(this);
   }
 
-  componentDidMount() {
-    window.addEventListener("resize", this.resizeEditor);
-  }
-
   componentWillUnmount() {
     document.removeEventListener('keyup', this.focusEditor);
-    window.removeEventListener("resize", this.resizeEditor);
   }
 
   editorDidMount(editor, monaco) {
@@ -85,7 +81,11 @@ class Editor extends PureComponent {
     updateFile({ key: fileKey, editorValue });
   }
 
-  resizeEditor = () => this._editor.layout();
+  componentDidUpdate(prevProps) {
+    if (this.props.dimensions !== prevProps.dimensions && this._editor) {
+      this._editor.layout();
+    }
+  }
 
   render() {
     const { contents, ext } = this.props;

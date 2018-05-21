@@ -4,6 +4,7 @@ import MonacoEditor from 'react-monaco-editor';
 
 const propTypes = {
   defaultOutput: PropTypes.string,
+  dimensions: PropTypes.object,
   height: PropTypes.number,
   output: PropTypes.string
 };
@@ -22,22 +23,20 @@ const options = {
 };
 
 class Output extends PureComponent {
-  constructor(...props) {
+  constructor() {
     super();
 
     this._editor = null;
   }
 
-  componentDidMount() {
-    window.addEventListener("resize", this.resizeOutput);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.resizeOutput);
-  }
-
-  editorDidMount(editor, monaco) {
+  editorDidMount(editor) {
     this._editor = editor;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.dimensions !== prevProps.dimensions && this._editor) {
+      this._editor.layout();
+    }
   }
 
   resizeOutput = () => this._editor.layout();

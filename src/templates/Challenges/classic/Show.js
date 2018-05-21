@@ -85,28 +85,6 @@ const propTypes = {
 };
 
 class ShowClassic extends PureComponent {
-  constructor() {
-    super()
-    this.resizeProps = {
-      // onStopResize: this.onStopResize.bind(this),
-      onResize: this.onResize.bind(this)
-    }
-  }
-
-  onResize(e) {
-    if (e.domElement) {
-      // e.domElement.classList.add('resizing');
-      this.forceUpdate();
-    }
-  }
-
-  // onStopResize(e) {
-  //   if (e.domElement) {
-  //     // e.domElement.classList.remove('resizing');
-  //     // console.log('stop working')
-  //   }
-  // }
-
   componentDidMount() {
     const {
       challengeMounted,
@@ -122,7 +100,6 @@ class ShowClassic extends PureComponent {
     updateChallengeMeta({ ...challengeMeta, title });
     updateSuccessMessage(randomCompliment());
     challengeMounted(challengeMeta.id);
-    // window.addEventListener("resize", this.resizeEditor.bind(this));
   }
 
   componentDidUpdate(prevProps) {
@@ -165,14 +142,14 @@ class ShowClassic extends PureComponent {
     const editors = Object.keys(files)
       .map(key => files[key])
       .map((file, index) => (
-        <Fragment key={file.key + index}>
+        <ReflexContainer orientation='horizontal' key={file.key + index}>
           {index !== 0 && <ReflexSplitter />}
-          <ReflexElement flex={1}>
+          <ReflexElement flex={1} propagateDimensions={true} renderOnResize={true} renderOnResizeRate={20}>
             <Editor {...file} fileKey={file.key} />
           </ReflexElement>
-          {index + 1 === Object.keys(files).length && <ReflexSplitter />}
+          {index + 1 === Object.keys(files).length && <ReflexSplitter propagate={true} />}
           {index + 1 === Object.keys(files).length ? (
-            <ReflexElement flex={0.25}>
+            <ReflexElement flex={0.25} propagateDimensions={true} renderOnResize={true} renderOnResizeRate={20}>
               <Output
                 defaultOutput={`
 /**
@@ -185,9 +162,8 @@ class ShowClassic extends PureComponent {
               />
             </ReflexElement>
           ) : null}
-        </Fragment>
+        </ReflexContainer>
       ));
-
     const showPreview =
       challengeType === challengeTypes.html ||
       challengeType === challengeTypes.modern;
@@ -206,10 +182,8 @@ class ShowClassic extends PureComponent {
             />
           </ReflexElement>
           <ReflexSplitter />
-          <ReflexElement flex={1} {...this.resizeProps}>
-            <ReflexContainer orientation='horizontal'>
-              {editors}
-            </ReflexContainer>
+          <ReflexElement flex={1}>
+            {editors}
           </ReflexElement>
           <ReflexSplitter />
           <ReflexElement flex={0.5}>
