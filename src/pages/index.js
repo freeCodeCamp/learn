@@ -51,7 +51,7 @@ const IndexPage = ({
     </p>
     <h3>Want to see what we can offer?</h3>
     <Button block={true} bsSize='lg' bsStyle='primary' onClick={toggleMapModal}>
-      Explore the lesson map
+      Explore the curriculum
     </Button>
   </div>
 );
