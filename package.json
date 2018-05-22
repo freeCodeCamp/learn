@@ -18,6 +18,7 @@
     "dotenv": "^5.0.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-15": "^1.0.5",
+    "fetchr": "^0.5.37",
     "gatsby": "^1.9.243",
     "gatsby-link": "^1.6.39",
     "gatsby-plugin-google-fonts": "^0.0.4",

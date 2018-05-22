@@ -142,14 +142,26 @@ class ShowClassic extends PureComponent {
     const editors = Object.keys(files)
       .map(key => files[key])
       .map((file, index) => (
-        <ReflexContainer orientation='horizontal' key={file.key + index}>
+        <ReflexContainer key={file.key + index} orientation='horizontal'>
           {index !== 0 && <ReflexSplitter />}
-          <ReflexElement flex={1} propagateDimensions={true} renderOnResize={true} renderOnResizeRate={20}>
+          <ReflexElement
+            flex={1}
+            propagateDimensions={true}
+            renderOnResize={true}
+            renderOnResizeRate={20}
+            >
             <Editor {...file} fileKey={file.key} />
           </ReflexElement>
-          {index + 1 === Object.keys(files).length && <ReflexSplitter propagate={true} />}
+          {index + 1 === Object.keys(files).length && (
+            <ReflexSplitter propagate={true} />
+          )}
           {index + 1 === Object.keys(files).length ? (
-            <ReflexElement flex={0.25} propagateDimensions={true} renderOnResize={true} renderOnResizeRate={20}>
+            <ReflexElement
+              flex={0.25}
+              propagateDimensions={true}
+              renderOnResize={true}
+              renderOnResizeRate={20}
+              >
               <Output
                 defaultOutput={`
 /**
@@ -181,9 +193,7 @@ class ShowClassic extends PureComponent {
             />
           </ReflexElement>
           <ReflexSplitter />
-          <ReflexElement flex={1}>
-            {editors}
-          </ReflexElement>
+          <ReflexElement flex={1}>{editors}</ReflexElement>
           <ReflexSplitter />
           <ReflexElement flex={0.5}>
             {showPreview ? <Preview className='full-height' /> : null}

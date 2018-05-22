@@ -1,6 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 
 import { createTypes } from '../../../utils/stateManagment';
+import fecthUserEpic from './fetch-user-epic';
 
 const ns = 'app';
 
@@ -28,7 +29,7 @@ function userIdentReplacer(state) {
   };
 }
 
-export const epics = [];
+export const epics = [fecthUserEpic];
 
 export const types = createTypes(
   [
