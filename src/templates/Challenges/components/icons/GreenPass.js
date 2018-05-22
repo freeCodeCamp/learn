@@ -11,7 +11,7 @@ function GreenPass() {
       xmlns='http://www.w3.org/2000/svg'
       >
       <g>
-        <title>Test Passed</title>
+        <title>Passed</title>
         <circle
           cx='100'
           cy='99'

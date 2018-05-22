@@ -1,5 +1,3 @@
-/* global SERVICE_URI */
-
 import {
   createStore as reduxCreateStore,
   combineReducers,
@@ -20,7 +18,7 @@ import { reducer as map } from '../components/Map/redux';
 import servicesCreator from './createServices';
 
 const serviceOptions = {
-  xhrPath: SERVICE_URI,
+  xhrPath: '/services',
   xhrTimeout: 15000
 };
 

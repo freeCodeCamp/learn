@@ -43,6 +43,7 @@ export const types = createTypes(
 );
 
 const initialState = {
+  appUsername: '',
   isSignedIn: false,
   user: {},
   showMapModal: false
@@ -58,15 +59,22 @@ export const updateUserSignedIn = createAction(types.updateUserSignedIn);
 
 export const isMapModalOpenSelector = state => state[ns].showMapModal;
 export const isSignedInSelector = state => state[ns].isSignedIn;
-export const userSelector = state => state[ns].user;
+export const userSelector = state => state[ns].user || {};
+export const completedChallengesSelector = state =>
+  state[ns].user.completedChallenges || [];
 
 export const allAppDataSelector = state => userIdentReplacer(state);
 
 export const reducer = handleActions(
   {
-    [types.fetchUserComplete]: (state, { payload }) => ({
+    [types.fetchUserComplete]: (
+      state,
+      { payload: { entities: { user }, result } }
+    ) => ({
       ...state,
-      user: payload
+      appUsername: result,
+      user: user[result],
+      isSignedIn: !!Object.keys(user).length
     }),
     [types.toggleMapModal]: state => ({
       ...state,

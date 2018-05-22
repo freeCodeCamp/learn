@@ -1,7 +1,14 @@
 import { of } from 'rxjs/observable/of';
 import { ofType } from 'redux-observable';
 import { types, fetchUserComplete } from './';
-import { switchMap, filter, map, catchError, tap } from 'rxjs/operators';
+import {
+  switchMap,
+  filter,
+  map,
+  catchError,
+  tap,
+  defaultIfEmpty
+} from 'rxjs/operators';
 
 function fetchUserEpic(action$, _, { services }) {
   return action$.pipe(
@@ -11,9 +18,10 @@ function fetchUserEpic(action$, _, { services }) {
       return services
         .readService$({ service: 'user' })
         .pipe(
-          filter(({ entities, result }) => entities && !!result),
           tap(console.info),
+          filter(({ entities, result }) => entities && !!result),
           map(fetchUserComplete),
+          defaultIfEmpty({ type: 'no-user' }),
           catchError(() => of({ type: 'error' }))
         );
     })

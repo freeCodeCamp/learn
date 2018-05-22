@@ -129,6 +129,7 @@ export const query = graphql`
             slug
             blockName
           }
+          id
           block
           title
           isRequired
