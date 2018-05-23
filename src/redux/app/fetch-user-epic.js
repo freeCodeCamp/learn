@@ -15,15 +15,16 @@ function fetchUserEpic(action$, _, { services }) {
     ofType(types.fetchUser),
     tap(console.info),
     switchMap(() => {
-      return services
-        .readService$({ service: 'user' })
-        .pipe(
-          tap(console.info),
-          filter(({ entities, result }) => entities && !!result),
-          map(fetchUserComplete),
-          defaultIfEmpty({ type: 'no-user' }),
-          catchError(() => of({ type: 'error' }))
-        );
+      return services.readService$({ service: 'user' }).pipe(
+        tap(console.info),
+        filter(({ entities, result }) => entities && !!result),
+        map(fetchUserComplete),
+        defaultIfEmpty({ type: 'no-user' }),
+        catchError(err => {
+          console.log(err);
+          return of({ type: 'error' });
+        })
+      );
     })
   );
 }

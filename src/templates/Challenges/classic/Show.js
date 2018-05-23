@@ -92,12 +92,14 @@ class ShowClassic extends PureComponent {
       initTests,
       updateChallengeMeta,
       updateSuccessMessage,
-      data: { challengeNode: { files, title, fields: { tests } } },
+      data: {
+        challengeNode: { files, title, fields: { tests }, challengeType }
+      },
       pathContext: { challengeMeta }
     } = this.props;
     createFiles(files);
     initTests(tests);
-    updateChallengeMeta({ ...challengeMeta, title });
+    updateChallengeMeta({ ...challengeMeta, title, challengeType });
     updateSuccessMessage(randomCompliment());
     challengeMounted(challengeMeta.id);
   }
@@ -111,7 +113,12 @@ class ShowClassic extends PureComponent {
       updateChallengeMeta,
       updateSuccessMessage,
       data: {
-        challengeNode: { files, title: currentTitle, fields: { tests } }
+        challengeNode: {
+          files,
+          title: currentTitle,
+          fields: { tests },
+          challengeType
+        }
       },
       pathContext: { challengeMeta }
     } = this.props;
@@ -119,7 +126,11 @@ class ShowClassic extends PureComponent {
       updateSuccessMessage(randomCompliment());
       createFiles(files);
       initTests(tests);
-      updateChallengeMeta({ ...challengeMeta, title: currentTitle });
+      updateChallengeMeta({
+        ...challengeMeta,
+        title: currentTitle,
+        challengeType
+      });
       challengeMounted(challengeMeta.id);
     }
   }

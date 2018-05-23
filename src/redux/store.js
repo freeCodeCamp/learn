@@ -20,7 +20,7 @@ import { _csrf } from './cookieVaules';
 
 const serviceOptions = {
   context: _csrf ? { _csrf } : {},
-  xhrPath: '/services',
+  xhrPath: '/external/services',
   xhrTimeout: 15000
 };
 
