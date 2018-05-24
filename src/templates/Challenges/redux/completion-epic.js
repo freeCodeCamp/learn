@@ -22,7 +22,7 @@ import {
   challengeTestsSelector,
   closeModal
 } from './';
-import { userSelector } from '../../../redux/app';
+import { userSelector, isSignedInSelector } from '../../../redux/app';
 
 import { postJSON$ } from '../utils/ajax-stream';
 import { challengeTypes, submitTypes } from '../../../../utils/challengeTypes';
@@ -126,6 +126,7 @@ export default function completionEpic(action$, { getState }) {
       const { nextChallengePath, introPath, challengeType } = meta;
       const next = of(push(introPath ? introPath : nextChallengePath));
       const closeChallengeModal = of(closeModal('completion'));
+      let submitter = () => of({type: 'no-user-signed-in'});
       if (
         !(challengeType in submitTypes) ||
         !(submitTypes[challengeType] in submitters)
@@ -135,7 +136,10 @@ export default function completionEpic(action$, { getState }) {
             challengeType
         );
       }
-      const submitter = submitters[submitTypes[challengeType]];
+      if (isSignedInSelector(state)) {
+        submitter = submitters[submitTypes[challengeType]];
+      }
+
 
       return submitter(type, state).pipe(
         concat(next),

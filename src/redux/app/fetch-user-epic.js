@@ -8,10 +8,12 @@ import {
   catchError,
   defaultIfEmpty
 } from 'rxjs/operators';
+import { jwt } from '../cookieVaules';
 
 function fetchUserEpic(action$, _, { services }) {
   return action$.pipe(
     ofType(types.fetchUser),
+    filter(() => !!jwt),
     switchMap(() => {
       return services.readService$({ service: 'user' }).pipe(
         filter(({ entities, result }) => entities && !!result),
@@ -19,7 +21,7 @@ function fetchUserEpic(action$, _, { services }) {
         defaultIfEmpty({ type: 'no-user' }),
         catchError(err => {
           console.log(err);
-          return of({ type: 'error' });
+          return of({ type: 'fetch-user-error' });
         })
       );
     })

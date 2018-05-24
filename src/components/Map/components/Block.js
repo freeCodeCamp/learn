@@ -18,7 +18,7 @@ const mapStateToProps = (state, ownProps) => {
   return createSelector(
     expandedSelector,
     userSelector,
-    (isExpanded, { completedChallenges }) => ({
+    (isExpanded, { completedChallenges = [] }) => ({
       isExpanded,
       completedChallenges: completedChallenges.map(({ id }) => id)
     })
