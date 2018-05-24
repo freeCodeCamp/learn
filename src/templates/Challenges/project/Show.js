@@ -18,7 +18,8 @@ import {
   updateChallengeMeta,
   createFiles,
   updateSuccessMessage,
-  openModal
+  openModal,
+  updateProjectFormValues
 } from '../redux';
 import { frontEndProject } from '../../../../utils/challengeTypes';
 
@@ -30,6 +31,7 @@ const mapDispatchToProps = dispatch =>
     {
       updateChallengeMeta,
       createFiles,
+      updateProjectFormValues,
       updateSuccessMessage,
       openCompletionModal: () => openModal('completion')
     },
@@ -46,6 +48,7 @@ const propTypes = {
     challengeMeta: PropTypes.object
   }),
   updateChallengeMeta: PropTypes.func.isRequired,
+  updateProjectFormValues: PropTypes.func.isRequired,
   updateSuccessMessage: PropTypes.func.isRequired
 };
 
@@ -94,7 +97,8 @@ export class Project extends PureComponent {
           guideUrl
         }
       },
-      openCompletionModal
+      openCompletionModal,
+      updateProjectFormValues
     } = this.props;
     const isFrontEnd = challengeType === frontEndProject;
 
@@ -113,6 +117,7 @@ export class Project extends PureComponent {
           <ProjectForm
             isFrontEnd={isFrontEnd}
             openModal={openCompletionModal}
+            updateProjectForm={updateProjectFormValues}
           />
         </div>
         <CompletionModal />

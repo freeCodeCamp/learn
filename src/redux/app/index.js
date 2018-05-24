@@ -1,33 +1,10 @@
 import { createAction, handleActions } from 'redux-actions';
 
 import { createTypes } from '../../../utils/stateManagment';
+import { types as challenge } from '../../templates/Challenges/redux';
 import fecthUserEpic from './fetch-user-epic';
 
 const ns = 'app';
-
-function userIdentReplacer(state) {
-  return {
-    ...state,
-    [ns]: {
-      ...state[ns],
-      user: {
-        ...state[ns].user,
-        about: '**blank**',
-        email: '**blank**',
-        facebook: '**blank**',
-        githubProfile: '**blank**',
-        linkedin: '**blank**',
-        location: '**blank**',
-        name: '**blank**',
-        picture: '**blank**',
-        portfolio: '**blank**',
-        twitter: '**blank**',
-        username: '**blank**',
-        website: '**blank**'
-      }
-    }
-  };
-}
 
 export const epics = [fecthUserEpic];
 
@@ -63,8 +40,6 @@ export const userSelector = state => state[ns].user || {};
 export const completedChallengesSelector = state =>
   state[ns].user.completedChallenges || [];
 
-export const allAppDataSelector = state => userIdentReplacer(state);
-
 export const reducer = handleActions(
   {
     [types.fetchUserComplete]: (
@@ -83,6 +58,16 @@ export const reducer = handleActions(
     [types.updateUserSignedIn]: (state, { payload }) => ({
       ...state,
       isSignedIn: payload
+    }),
+    [challenge.submitComplete]: (state, { payload: { points, id } }) => ({
+      ...state,
+      user: {
+        ...state.user,
+        completedChallenges:
+          points === state.user.points
+            ? state.user.completedChallenges
+            : [...state.user.completedChallengesSelector, { id }]
+      }
     })
   },
   initialState

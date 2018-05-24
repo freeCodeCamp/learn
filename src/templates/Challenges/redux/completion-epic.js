@@ -32,10 +32,12 @@ function postChallenge(url, username, _csrf, challengeInfo) {
   const body = { ...challengeInfo, _csrf };
   const saveChallenge = postJSON$(url, body).pipe(
     retry(3),
-    map(({ points, completedDate }) =>
-      submitComplete(username, points, {
-        ...challengeInfo,
-        completedDate
+    tap(console.log),
+    map(({ points }) =>
+      submitComplete({
+        username,
+        points,
+        ...challengeInfo
       })
     ),
     catchError(err => {
@@ -75,6 +77,7 @@ function submitProject(type, state) {
   }
 
   const { solution, githubLink } = projectFormVaulesSelector(state);
+  console.log(solution, githubLink);
   const { id, challengeType } = challengeMetaSelector(state);
   const { username } = userSelector(state);
   const challengeInfo = { id, challengeType, solution };
@@ -95,7 +98,10 @@ function submitBackendChallenge(type, state) {
     if (type === types.submitChallenge) {
       const { id } = challengeMetaSelector(state);
       const { username } = userSelector(state);
-      const { solution } = backendFormValuesSelector(state);
+      const { solution: { value: solution } } = backendFormValuesSelector(
+        state
+      );
+      console.log(solution);
       const challengeInfo = { id, solution };
       return postChallenge(
         '/external/backend-challenge-completed',
@@ -134,6 +140,7 @@ export default function completionEpic(action$, { getState }) {
             challengeType
         );
       }
+      console.log(submitTypes[challengeType]);
       const submitter = submitters[submitTypes[challengeType]];
 
       return submitter(type, state).pipe(

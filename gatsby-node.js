@@ -102,10 +102,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   });
 };
 
-const webpack = require('webpack');
 const generateBabelConfig = require('gatsby/dist/utils/babel-config');
 
-exports.modifyWebpackConfig = ({ config, stage, reporter }) => {
+exports.modifyWebpackConfig = ({ config, stage }) => {
   const program = {
     directory: __dirname,
     browserslist: ['> 1%', 'last 2 versions', 'IE >= 9']
@@ -135,21 +134,6 @@ exports.modifyWebpackConfig = ({ config, stage, reporter }) => {
         }
       ]
     ]);
-
-    const { DEV_SERVICE_PATH, PROD_SERVICE_PATH, NODE_ENV } = process.env;
-    if (NODE_ENV === 'production' && !PROD_SERVICE_PATH) {
-      reporter.panic(`
-      No Service URI has been set.
-      We need this to talk to the server!
-      `);
-    }
-    const servicePath =
-      NODE_ENV === 'production' ? PROD_SERVICE_PATH : DEV_SERVICE_PATH;
-    config.plugin('DefinePlugin', webpack.DefinePlugin, [
-      {
-        SERVICE_URI: JSON.stringify(servicePath)
-      }
-    ]);
   });
 };
 /* eslint-disable prefer-object-spread/prefer-object-spread */
@@ -159,6 +143,7 @@ exports.modifyBabelrc = ({ babelrc }) =>
       [
         'transform-es2015-arrow-functions',
         'transform-imports',
+        'transform-function-bind',
         {
           'react-bootstrap': {
             transform: 'react-bootstrap/lib/${member}',
