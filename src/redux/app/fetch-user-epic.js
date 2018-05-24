@@ -6,17 +6,14 @@ import {
   filter,
   map,
   catchError,
-  tap,
   defaultIfEmpty
 } from 'rxjs/operators';
 
 function fetchUserEpic(action$, _, { services }) {
   return action$.pipe(
     ofType(types.fetchUser),
-    tap(console.info),
     switchMap(() => {
       return services.readService$({ service: 'user' }).pipe(
-        tap(console.info),
         filter(({ entities, result }) => entities && !!result),
         map(fetchUserComplete),
         defaultIfEmpty({ type: 'no-user' }),

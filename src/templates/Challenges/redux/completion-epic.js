@@ -2,7 +2,6 @@ import { of } from 'rxjs/observable/of';
 import { empty } from 'rxjs/observable/empty';
 import {
   switchMap,
-  tap,
   retry,
   map,
   catchError,
@@ -32,7 +31,6 @@ function postChallenge(url, username, _csrf, challengeInfo) {
   const body = { ...challengeInfo, _csrf };
   const saveChallenge = postJSON$(url, body).pipe(
     retry(3),
-    tap(console.log),
     map(({ points }) =>
       submitComplete({
         username,
@@ -77,7 +75,6 @@ function submitProject(type, state) {
   }
 
   const { solution, githubLink } = projectFormVaulesSelector(state);
-  console.log(solution, githubLink);
   const { id, challengeType } = challengeMetaSelector(state);
   const { username } = userSelector(state);
   const challengeInfo = { id, challengeType, solution };
@@ -101,7 +98,6 @@ function submitBackendChallenge(type, state) {
       const { solution: { value: solution } } = backendFormValuesSelector(
         state
       );
-      console.log(solution);
       const challengeInfo = { id, solution };
       return postChallenge(
         '/external/backend-challenge-completed',
@@ -123,7 +119,6 @@ const submitters = {
 
 export default function completionEpic(action$, { getState }) {
   return action$.pipe(
-    tap(console.log),
     ofType(types.submitChallenge),
     switchMap(({ type }) => {
       const state = getState();
@@ -140,7 +135,6 @@ export default function completionEpic(action$, { getState }) {
             challengeType
         );
       }
-      console.log(submitTypes[challengeType]);
       const submitter = submitters[submitTypes[challengeType]];
 
       return submitter(type, state).pipe(
