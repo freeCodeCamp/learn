@@ -1,1 +1,1 @@
-/external/services/* https://beta.freecodecamp.org/external/services/:splat 200
+/external/* https://beta.freecodecamp.org/external/:splat 200
