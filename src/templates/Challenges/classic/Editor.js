@@ -97,7 +97,7 @@ class Editor extends PureComponent {
           language={modeMap[ext]}
           onChange={::this.onChange}
           options={this.options}
-          theme='vs-dark'
+          theme='vs'
           value={contents}
         />
       </div>
