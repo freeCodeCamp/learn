@@ -14,13 +14,16 @@ import {
   closeModal,
   submitChallenge,
   isCompletionModalOpenSelector,
-  successMessageSelector
+  successMessageSelector,
+  challengeFilesSelector
 } from '../redux';
 
 const mapStateToProps = createSelector(
+  challengeFilesSelector,
   isCompletionModalOpenSelector,
   successMessageSelector,
-  (isOpen, message) => ({
+  (files, isOpen, message) => ({
+    files,
     isOpen,
     message
   })
@@ -43,6 +46,10 @@ const mapDispatchToProps = function(dispatch) {
 
 const propTypes = {
   close: PropTypes.func.isRequired,
+  dashedName: PropTypes.string.isRequired,
+  files: PropTypes.shape({
+    key: PropTypes.string
+  }),
   handleKeypress: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
   message: PropTypes.string,
@@ -56,7 +63,9 @@ export class CompletionModal extends PureComponent {
       isOpen,
       submitChallenge,
       handleKeypress,
-      message
+      message,
+      files,
+      dashedName
     } = this.props;
     if (isOpen) {
       ga.modalview('/completion-modal');
@@ -90,6 +99,19 @@ export class CompletionModal extends PureComponent {
             onClick={submitChallenge}
             >
             Submit and go to next challenge (Ctrl + Enter)
+          </Button>
+          <Button
+            block={true}
+            bsSize='lg'
+            bsStyle='primary'
+            download={`${dashedName}.json`}
+            href={
+              `data:text/json;charset=utf-8,${
+                encodeURIComponent(JSON.stringify(files))
+              }`
+            }
+            >
+            Download my solution
           </Button>
         </Modal.Footer>
       </Modal>
