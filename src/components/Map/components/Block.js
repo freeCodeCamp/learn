@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import Link, { navigateTo } from 'gatsby-link';
+import Link from 'gatsby-link';
 
 import ga from '../../../analytics';
 import { makeExpandedBlockSelector, toggleBlock } from '../redux';
@@ -57,17 +57,12 @@ export class Block extends PureComponent {
   }
 
   handleBlockClick() {
-    const { blockDashedName, challenges, toggleBlock } = this.props;
-    const blockPath = challenges[0].fields.slug
-      .split('/')
-      .slice(0, -1)
-      .join('/');
+    const { blockDashedName, toggleBlock } = this.props;
     toggleBlock(blockDashedName);
     ga.event({
       category: 'Map Block Click',
       action: blockDashedName
     });
-    return navigateTo(blockPath);
   }
 
   handleChallengeClick(slug) {
