@@ -10,3 +10,6 @@ Responsive Web Design is an approach to designing web content that responds to t
 In general, design the page's CSS to your target audience. If you expect most of your traffic to be from mobile users, take a 'mobile-first' approach. Then add conditional rules for larger screen sizes. If your visitors are desktop users, then design for larger screens with conditional rules for smaller sizes.
 CSS gives you the tools to write different style rules, then apply them depending on the device displaying the page. This section will cover the basic ways to use CSS for Responsive Web Design.
 
+Further Reading:
+
+[Foundational 2010 Article that ushered in the Responsive Web Design era by Ethan Marcotte](https://alistapart.com/article/responsive-web-design)
