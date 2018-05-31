@@ -76,7 +76,8 @@
     "lint:src": "eslint ./src . --fix",
     "lint:utils": "eslint ./utils . --fix",
     "pretty": "yarn format && yarn lint",
-    "test": "yarn format && jest src",
+    "test": "jest src",
+    "test:ci": "yarn format && jest src",
     "test:watch": "jest --watch src"
   },
   "jest": {
