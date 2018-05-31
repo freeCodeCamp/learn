@@ -54,7 +54,6 @@ export class SuperBlock extends PureComponent {
     const blockDashedNames = uniq(
       blocksForSuperBlock.map(({ block }) => block)
     );
-
     return (
       <ul>
         {blockDashedNames.map(blockDashedName => (

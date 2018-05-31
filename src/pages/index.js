@@ -5,11 +5,15 @@ import Link from 'gatsby-link';
 import Helmet from 'react-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
 
-import { ChallengeNode } from '../redux/propTypes';
+import {
+  ChallengeNode,
+  AllChallengeNode,
+  AllMarkdownRemark
+} from '../redux/propTypes';
 import { toggleMapModal } from '../redux/app';
 import Spacer from '../components/util/Spacer';
+import Map from '../components/Map';
 
 import './index.css';
 
@@ -20,14 +24,19 @@ const mapDispatchToProps = dispatch =>
 
 const propTypes = {
   data: PropTypes.shape({
-    challengeNode: ChallengeNode
+    challengeNode: ChallengeNode,
+    allChallengeNode: AllChallengeNode,
+    allMarkdownRemark: AllMarkdownRemark
   }),
   toggleMapModal: PropTypes.func.isRequired
 };
 
 const IndexPage = ({
-  data: { challengeNode: { title, fields: { slug, blockName } } },
-  toggleMapModal
+  data: {
+    challengeNode: { title, fields: { slug, blockName } },
+    allChallengeNode: { edges },
+    allMarkdownRemark: { edges: mdEdges }
+  }
 }) => (
   <div className='index-page-wrapper'>
     <Helmet title='Welcome to learn.freeCodeCamp!' />
@@ -53,9 +62,12 @@ const IndexPage = ({
       <Link to={slug}>{`${blockName} -> ${title}`}</Link>
     </p>
     <h3>Want to dive into our curriculum?</h3>
-    <Button block={true} bsSize='lg' bsStyle='primary' onClick={toggleMapModal}>
-      Explore the curriculum
-    </Button>
+    <Map
+      introNodes={mdEdges.map(({ node }) => node)}
+      nodes={edges
+        .map(({ node }) => node)
+        .filter(({ isPrivate }) => !isPrivate)}
+    />
   </div>
 );
 
@@ -71,6 +83,39 @@ export const query = graphql`
       fields {
         slug
         blockName
+      }
+    }
+    allChallengeNode(
+      filter: { isPrivate: { eq: false } }
+      sort: { fields: [superOrder, order, suborder] }
+    ) {
+      edges {
+        node {
+          fields {
+            slug
+            blockName
+          }
+          id
+          block
+          title
+          isRequired
+          isPrivate
+          superBlock
+          dashedName
+        }
+      }
+    }
+    allMarkdownRemark(filter: { frontmatter: { block: { ne: null } } }) {
+      edges {
+        node {
+          frontmatter {
+            title
+            block
+          }
+          fields {
+            slug
+          }
+        }
       }
     }
   }
