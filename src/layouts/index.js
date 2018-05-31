@@ -1,4 +1,3 @@
-/* global graphql */
 import React, { Fragment, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,10 +6,9 @@ import Helmet from 'react-helmet';
 
 import ga from '../analytics';
 
-import { AllChallengeNode } from '../redux/propTypes';
 import Header from '../components/Header';
-import MapModal from '../components/MapModal';
 import { fetchUser } from '../redux/app';
+import unregisterServiceWorker from '../client/unregisterServiceWorker';
 
 import 'prismjs/themes/prism.css';
 import 'react-reflex/styles.css';
@@ -47,7 +45,6 @@ const mapDispatchToProps = dispatch =>
 
 const propTypes = {
   children: PropTypes.func,
-  data: AllChallengeNode,
   fetchUser: PropTypes.func.isRequired
 };
 
@@ -79,13 +76,7 @@ class Layout extends PureComponent {
     }
   }
   render() {
-    const {
-      children,
-      data: {
-        allChallengeNode: { edges },
-        allMarkdownRemark: { edges: mdEdges }
-      }
-    } = this.props;
+    const { children } = this.props;
     return (
       <Fragment>
         <Helmet
@@ -98,17 +89,13 @@ class Layout extends PureComponent {
             },
             { name: 'keywords', content: metaKeywords.join(', ') }
           ]}
-        />
+          >
+          <script>{unregisterServiceWorker()}</script>
+        </Helmet>
         <Header />
         <div className='app-wrapper'>
           <main>{children()}</main>
         </div>
-        <MapModal
-          introNodes={mdEdges.map(({ node }) => node)}
-          nodes={edges
-            .map(({ node }) => node)
-            .filter(({ isPrivate }) => !isPrivate)}
-        />
       </Fragment>
     );
   }
@@ -117,41 +104,3 @@ class Layout extends PureComponent {
 Layout.propTypes = propTypes;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);
-
-export const query = graphql`
-  query LayoutQuery {
-    allChallengeNode(
-      filter: { isPrivate: { eq: false } }
-      sort: { fields: [superOrder, order, suborder] }
-    ) {
-      edges {
-        node {
-          fields {
-            slug
-            blockName
-          }
-          id
-          block
-          title
-          isRequired
-          isPrivate
-          superBlock
-          dashedName
-        }
-      }
-    }
-    allMarkdownRemark(filter: { frontmatter: { block: { ne: null } } }) {
-      edges {
-        node {
-          frontmatter {
-            title
-            block
-          }
-          fields {
-            slug
-          }
-        }
-      }
-    }
-  }
-`;
