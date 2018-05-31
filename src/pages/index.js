@@ -57,6 +57,7 @@ const IndexPage = ({
       If you are new to coding, we recommend you{' '}
       <Link to={slug}>start at the beginning</Link>.
     </p>
+    <Spacer />
     <Map
       introNodes={mdEdges.map(({ node }) => node)}
       nodes={edges
