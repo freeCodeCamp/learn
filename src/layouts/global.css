@@ -657,12 +657,3 @@ h1, h2, h3, h4, h5, h6 {
 .btn-primary-link > a {
   color: #fff;
 }
-
-body::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-}
-
-body::-webkit-scrollbar-thumb {
-background-color: darkgrey;
-outline: 1px solid slategrey;
-}
