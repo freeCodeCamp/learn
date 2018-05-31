@@ -11252,6 +11252,10 @@ webpack-md5-hash@0.0.5:
   dependencies:
     md5 "^2.0.0"
 
+webpack-remove-serviceworker-plugin@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/webpack-remove-serviceworker-plugin/-/webpack-remove-serviceworker-plugin-1.0.0.tgz#63a7604da9a7fd9bae8f9eef87d274a2470dcaa7"
+
 webpack-sources@^0.1.0:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-0.1.5.tgz#aa1f3abf0f0d74db7111c40e500b84f966640750"

@@ -8,7 +8,6 @@ import ga from '../analytics';
 
 import Header from '../components/Header';
 import { fetchUser } from '../redux/app';
-import unregisterServiceWorker from '../client/unregisterServiceWorker';
 
 import 'prismjs/themes/prism.css';
 import 'react-reflex/styles.css';
@@ -89,9 +88,7 @@ class Layout extends PureComponent {
             },
             { name: 'keywords', content: metaKeywords.join(', ') }
           ]}
-          >
-          <script>{unregisterServiceWorker()}</script>
-        </Helmet>
+        />
         <Header />
         <div className='app-wrapper'>
           <main>{children()}</main>
