@@ -8,8 +8,12 @@ export const getNS = () => ns;
 
 const initialState = {
   expandedState: {
-    superBlock: {},
-    block: {}
+    superBlock: {
+      'Responsive Web Design': true
+    },
+    block: {
+      'basic-html-and-html5': true
+    }
   }
 };
 
@@ -18,14 +22,10 @@ const types = createTypes(['toggleSuperBlock', 'toggleBlock'], ns);
 export const toggleBlock = createAction(types.toggleBlock);
 export const toggleSuperBlock = createAction(types.toggleSuperBlock);
 
-// We want expanded by default, so we return the opposite of the expanded state
-// This way we do not need to create a massive object full of zeros
-// We only track the superBlock/blocks that the user has clicked
-// If not clicked, it defaults to open
 export const makeExpandedSuperBlockSelector = superBlock => state =>
-  !state[ns].expandedState.superBlock[superBlock];
+  !!state[ns].expandedState.superBlock[superBlock];
 export const makeExpandedBlockSelector = block => state =>
-  !state[ns].expandedState.block[block];
+  !!state[ns].expandedState.block[block];
 
 export const reducer = handleActions(
   {
