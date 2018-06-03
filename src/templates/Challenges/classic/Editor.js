@@ -77,7 +77,14 @@ class Editor extends PureComponent {
 
   onChange(editorValue) {
     const { updateFile, fileKey } = this.props;
-    updateFile({ key: fileKey, editorValue });
+
+    /* for regular "" */
+    const totalAp = (editorValue.match(/\"/g) || []).length;
+    /* for escape \" */
+    const totalBap = (editorValue.match(/\\"/g) || []).length;
+    if ((totalAp - totalBap) % 2 === 0) {
+      updateFile({ key: fileKey, editorValue });
+    }
   }
 
   componentDidUpdate(prevProps) {
