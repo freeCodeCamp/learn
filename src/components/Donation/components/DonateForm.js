@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import isEmail from 'validator/lib/isEmail';
 
 import CardForm from './CardForm';
 import { injectStripe } from 'react-stripe-elements';
@@ -25,12 +26,17 @@ const initialSate = {
 class DonateForm extends PureComponent {
   constructor(...args) {
     super(...args);
+    const [props] = args;
 
-    this.state = initialSate;
+    this.state = {
+      ...initialSate,
+      email: props.email
+    };
 
     this.buttonAmounts = [500, 1000, 3500, 5000, 25000];
 
     this.handleAmountClick = this.handleAmountClick.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.isActive = this.isActive.bind(this);
     this.renderAmountButtons = this.renderAmountButtons.bind(this);
@@ -47,23 +53,39 @@ class DonateForm extends PureComponent {
     }));
   }
 
+  handleEmailChange(e) {
+    const newValue = e.target.value;
+    return this.setState(state => ({
+      ...state,
+      email: newValue
+    }));
+  }
+
   handleSubmit() {
-    return this.props.stripe
-      .createToken({ email: this.props.email })
-      .then(({ error, token }) => {
-        if (error) {
-          return this.setState(state => ({
-            ...state,
-            donationState: {
-              ...state.donationState,
-              error:
-                'Something went wrong processing your donation. Your card' +
-                ' has not been charged.'
-            }
-          }));
+    const { email } = this.state;
+    if (!email || !isEmail(email)) {
+      return this.setState(state => ({
+        ...state,
+        donationState: {
+          ...state.donationState,
+          error: 'We need a valid email address to manage your donation'
         }
-        return this.postDonation(token);
-      });
+      }));
+    }
+    return this.props.stripe.createToken({ email }).then(({ error, token }) => {
+      if (error) {
+        return this.setState(state => ({
+          ...state,
+          donationState: {
+            ...state.donationState,
+            error:
+              'Something went wrong processing your donation. Your card' +
+              ' has not been charged.'
+          }
+        }));
+      }
+      return this.postDonation(token);
+    });
   }
 
   isActive(amount) {
@@ -132,12 +154,34 @@ class DonateForm extends PureComponent {
         <div id='donate-amount-panel'>
           <ul>{this.renderAmountButtons()}</ul>
         </div>
+        {this.renderEmailInput()}
         <CardForm
           amount={this.state.donationAmount / 100}
           handleSubmit={this.handleSubmit}
         />
         {this.props.maybeButton()}
       </Fragment>
+    );
+  }
+
+  renderEmailInput() {
+    const { email } = this.state;
+    return (
+      <div className='donation-email-container'>
+        <label>
+          Email
+          <input
+            onChange={this.handleEmailChange}
+            placeholder='myemail@example.com'
+            required={true}
+            type='email'
+            value={email}
+          />
+        </label>
+        <span className='donation-email-help-text'>
+          This will be the email we use to manage your donation.
+        </span>
+      </div>
     );
   }
 

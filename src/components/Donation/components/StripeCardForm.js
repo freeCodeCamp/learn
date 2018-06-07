@@ -11,6 +11,12 @@ const propTypes = {
   getValidationState: PropTypes.func.isRequired
 };
 
+const style = {
+  base: {
+    color: '#006400'
+  }
+};
+
 class StripCardForm extends PureComponent {
   constructor(...props) {
     super(...props);
@@ -69,15 +75,15 @@ class StripCardForm extends PureComponent {
       <div className='donation-elements'>
         <FormGroup>
           <ControlLabel>Card Number</ControlLabel>
-          <CardNumberElement onChange={this.handleInputChange} />
+          <CardNumberElement onChange={this.handleInputChange} style={style} />
         </FormGroup>
         <FormGroup>
           <ControlLabel>Card Expiry</ControlLabel>
-          <CardExpiryElement onChange={this.handleInputChange} />
+          <CardExpiryElement onChange={this.handleInputChange} style={style} />
         </FormGroup>
         <FormGroup>
           <ControlLabel>Card CVC</ControlLabel>
-          <CardCVCElement onChange={this.handleInputChange} />
+          <CardCVCElement onChange={this.handleInputChange} style={style} />
         </FormGroup>
       </div>
     );

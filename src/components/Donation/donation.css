@@ -7,11 +7,6 @@
   height: 300px;
 }
 
-.donation-email-label {
-  display: flex;
-  flex-direction: column;
-}
-
 #donate-amount-panel ul {
   list-style: none;
   display: flex;
@@ -61,6 +56,22 @@
 
 .donation-completion-buttons button {
   margin: 0 10px;
+}
+
+.donation-email-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.donation-email-container label {
+  display: flex;
+  flex-direction: column;
+}
+
+.donation-email-container input {
+  color: #006400;
+  font-weight: normal;
+  border: none;
 }
 
 .maybe-later-container {
