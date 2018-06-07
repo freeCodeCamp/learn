@@ -74,15 +74,15 @@ class StripCardForm extends PureComponent {
     return (
       <div className='donation-elements'>
         <FormGroup>
-          <ControlLabel>Card Number</ControlLabel>
+          <ControlLabel>Card Number:</ControlLabel>
           <CardNumberElement onChange={this.handleInputChange} style={style} />
         </FormGroup>
         <FormGroup>
-          <ControlLabel>Card Expiry</ControlLabel>
+          <ControlLabel>Card Expiry:</ControlLabel>
           <CardExpiryElement onChange={this.handleInputChange} style={style} />
         </FormGroup>
         <FormGroup>
-          <ControlLabel>Card CVC</ControlLabel>
+          <ControlLabel>Card CVC (3-digit security number):</ControlLabel>
           <CardCVCElement onChange={this.handleInputChange} style={style} />
         </FormGroup>
       </div>

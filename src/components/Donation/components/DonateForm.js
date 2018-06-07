@@ -68,7 +68,8 @@ class DonateForm extends PureComponent {
         ...state,
         donationState: {
           ...state.donationState,
-          error: 'We need a valid email address to manage your donation'
+          error:
+            'We need a valid email address to send your donation tax reciept to'
         }
       }));
     }
@@ -124,8 +125,7 @@ class DonateForm extends PureComponent {
             success: false,
             error: err.error
           }
-        })),
-      () => console.log('COMPLETE?')
+        }))
     );
   }
 
@@ -147,7 +147,7 @@ class DonateForm extends PureComponent {
     return (
       <Fragment>
         <p>
-          freeCodeCamp is completely free. But is costs our nonprofit a lot of
+          freeCodeCamp is completely free. But it costs our nonprofit a lot of
           money to run it. Help us pay for servers. Set up a tax-deductible
           monthly donation you can afford.
         </p>
@@ -169,18 +169,15 @@ class DonateForm extends PureComponent {
     return (
       <div className='donation-email-container'>
         <label>
-          Email
+          Email where we should send your donation tax reciept:
           <input
             onChange={this.handleEmailChange}
-            placeholder='myemail@example.com'
+            placeholder='email@example.com'
             required={true}
             type='email'
             value={email}
           />
         </label>
-        <span className='donation-email-help-text'>
-          This will be the email we use to manage your donation.
-        </span>
       </div>
     );
   }
