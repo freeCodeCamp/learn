@@ -197,7 +197,7 @@ class ShowClassic extends PureComponent {
           </ReflexElement>
         </ReflexContainer>
 
-        <CompletionModal dashedName={dashedName}/>
+        <CompletionModal dashedName={dashedName} />
         <HelpModal />
         <ResetModal />
       </Fragment>

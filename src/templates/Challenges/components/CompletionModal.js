@@ -105,11 +105,9 @@ export class CompletionModal extends PureComponent {
             bsSize='lg'
             bsStyle='primary'
             download={`${dashedName}.json`}
-            href={
-              `data:text/json;charset=utf-8,${
-                encodeURIComponent(JSON.stringify(files))
-              }`
-            }
+            href={`data:text/json;charset=utf-8,${encodeURIComponent(
+              JSON.stringify(files)
+            )}`}
             >
             Download my solution
           </Button>
