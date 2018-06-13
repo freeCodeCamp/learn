@@ -5,6 +5,5 @@ superBlock: Responsive Web Design
 ---
 ## Introduction to the Responsive Web Design Projects
 
-This introduction is a stub
-
-Help us make it real on [GitHub](https://github.com/freeCodeCamp/learn/tree/master/src/introductions).
+In this section, You'll create Responsive Web Design Projects and practically apply what you've learned so far.  
+  Good Luck!! :) 
