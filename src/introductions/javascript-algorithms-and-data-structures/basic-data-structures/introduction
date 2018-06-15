@@ -1,0 +1,3 @@
+Generally speaking, data structures are different ways of storing data of different types and for different purposes.
+Compared to other programming languages, JavaScript has relatively few data structures, namely only objects with arrays being special kinds of objects.
+In this series of lessons you will learn about basic data structures in JavaScript and some ways of working with them.
