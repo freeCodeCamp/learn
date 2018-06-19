@@ -92,12 +92,12 @@ class ShowClassic extends PureComponent {
       initTests,
       updateChallengeMeta,
       updateSuccessMessage,
-      data: { challengeNode: { files, dashedName, title, fields: { tests } } },
+      data: { challengeNode: { files, title, fields: { tests } } },
       pathContext: { challengeMeta }
     } = this.props;
     createFiles(files);
     initTests(tests);
-    updateChallengeMeta({ ...challengeMeta, dashedName, title });
+    updateChallengeMeta({ ...challengeMeta, title });
     updateSuccessMessage(randomCompliment());
     challengeMounted(challengeMeta.id);
   }
@@ -131,7 +131,6 @@ class ShowClassic extends PureComponent {
           challengeType,
           fields: { blockName },
           title,
-          dashedName,
           description,
           guideUrl
         }
@@ -197,7 +196,7 @@ class ShowClassic extends PureComponent {
           </ReflexElement>
         </ReflexContainer>
 
-        <CompletionModal dashedName={dashedName} />
+        <CompletionModal />
         <HelpModal />
         <ResetModal />
       </Fragment>
@@ -214,7 +213,6 @@ export const query = graphql`
   query ClassicChallenge($slug: String!) {
     challengeNode(fields: { slug: { eq: $slug } }) {
       title
-      dashedName
       guideUrl
       description
       challengeType
