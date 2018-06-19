@@ -15,15 +15,18 @@ import {
   submitChallenge,
   isCompletionModalOpenSelector,
   successMessageSelector,
-  challengeFilesSelector
+  challengeFilesSelector,
+  challengeMetaSelector
 } from '../redux';
 
 const mapStateToProps = createSelector(
   challengeFilesSelector,
+  challengeMetaSelector,
   isCompletionModalOpenSelector,
   successMessageSelector,
-  (files, isOpen, message) => ({
+  (files, challengeMeta, isOpen, message) => ({
     files,
+    challengeMeta,
     isOpen,
     message
   })
@@ -45,8 +48,8 @@ const mapDispatchToProps = function(dispatch) {
 };
 
 const propTypes = {
+  challengeMeta: PropTypes.object.isRequired,
   close: PropTypes.func.isRequired,
-  dashedName: PropTypes.string.isRequired,
   files: PropTypes.shape({
     key: PropTypes.string
   }),
@@ -65,11 +68,12 @@ export class CompletionModal extends PureComponent {
       handleKeypress,
       message,
       files,
-      dashedName
+      challengeMeta: { title = 'untitled' }
     } = this.props;
     if (isOpen) {
       ga.modalview('/completion-modal');
     }
+    const dashedName = title.replace(/ /g, '-').toLowerCase();
     return (
       <Modal
         animation={false}
