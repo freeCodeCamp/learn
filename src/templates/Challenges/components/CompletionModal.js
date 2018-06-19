@@ -108,6 +108,7 @@ export class CompletionModal extends PureComponent {
             block={true}
             bsSize='lg'
             bsStyle='primary'
+            className='btn-primary-invert'
             download={`${dashedName}.json`}
             href={`data:text/json;charset=utf-8,${encodeURIComponent(
               JSON.stringify(files)
