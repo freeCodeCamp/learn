@@ -51,7 +51,9 @@ const propTypes = {
   challengeMeta: PropTypes.object.isRequired,
   close: PropTypes.func.isRequired,
   files: PropTypes.shape({
-    key: PropTypes.string
+    indexhtml: PropTypes.shape({
+      contents: PropTypes.string
+    })
   }),
   handleKeypress: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
@@ -67,7 +69,7 @@ export class CompletionModal extends PureComponent {
       submitChallenge,
       handleKeypress,
       message,
-      files,
+      files: { indexhtml: { contents } = { contents: 'empty' }},
       challengeMeta: { title = 'untitled' }
     } = this.props;
     if (isOpen) {
@@ -111,7 +113,7 @@ export class CompletionModal extends PureComponent {
             className='btn-primary-invert'
             download={`${dashedName}.json`}
             href={`data:text/json;charset=utf-8,${encodeURIComponent(
-              JSON.stringify(files)
+              JSON.stringify(contents)
             )}`}
             >
             Download my solution
