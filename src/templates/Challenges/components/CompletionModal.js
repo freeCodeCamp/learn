@@ -8,6 +8,8 @@ import { Button, Modal } from 'react-bootstrap';
 import ga from '../../../analytics';
 import GreenPass from './icons/GreenPass';
 
+import { dasherize } from '../../../../utils';
+
 import './completion-modal.css';
 
 import {
@@ -24,9 +26,9 @@ const mapStateToProps = createSelector(
   challengeMetaSelector,
   isCompletionModalOpenSelector,
   successMessageSelector,
-  (files, challengeMeta, isOpen, message) => ({
+  (files, { title }, isOpen, message) => ({
     files,
-    challengeMeta,
+    title,
     isOpen,
     message
   })
@@ -48,17 +50,13 @@ const mapDispatchToProps = function(dispatch) {
 };
 
 const propTypes = {
-  challengeMeta: PropTypes.object.isRequired,
   close: PropTypes.func.isRequired,
-  files: PropTypes.shape({
-    indexhtml: PropTypes.shape({
-      contents: PropTypes.string
-    })
-  }),
+  files: PropTypes.object.isRequired,
   handleKeypress: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
   message: PropTypes.string,
-  submitChallenge: PropTypes.func.isRequired
+  submitChallenge: PropTypes.func.isRequired,
+  title: PropTypes.string
 };
 
 export class CompletionModal extends PureComponent {
@@ -69,13 +67,19 @@ export class CompletionModal extends PureComponent {
       submitChallenge,
       handleKeypress,
       message,
-      files: { indexhtml: { contents } = { contents: 'empty' }},
-      challengeMeta: { title = 'untitled' }
+      files,
+      title
     } = this.props;
     if (isOpen) {
       ga.modalview('/completion-modal');
     }
-    const dashedName = title.replace(/ /g, '-').toLowerCase();
+    const filesForDownload = Object.keys(files)
+      .map(key => files[key])
+      .reduce((allFiles, { path, contents }) => ({
+        ...allFiles,
+        [path]: contents
+      }), {});
+    const dashedName = dasherize(title);
     return (
       <Modal
         animation={false}
@@ -113,7 +117,7 @@ export class CompletionModal extends PureComponent {
             className='btn-primary-invert'
             download={`${dashedName}.json`}
             href={`data:text/json;charset=utf-8,${encodeURIComponent(
-              JSON.stringify(contents)
+              JSON.stringify(filesForDownload)
             )}`}
             >
             Download my solution
