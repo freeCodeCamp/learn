@@ -67,12 +67,13 @@ export class CompletionModal extends PureComponent {
       submitChallenge,
       handleKeypress,
       message,
-      files,
+      files = {},
       title
     } = this.props;
     if (isOpen) {
       ga.modalview('/completion-modal');
     }
+    const showDownloadButton = Object.keys(files).length;
     const filesForDownload = Object.keys(files)
       .map(key => files[key])
       .reduce((allFiles, { path, contents }) => ({
@@ -110,18 +111,21 @@ export class CompletionModal extends PureComponent {
             >
             Submit and go to next challenge (Ctrl + Enter)
           </Button>
-          <Button
-            block={true}
-            bsSize='lg'
-            bsStyle='primary'
-            className='btn-primary-invert'
-            download={`${dashedName}.json`}
-            href={`data:text/json;charset=utf-8,${encodeURIComponent(
-              JSON.stringify(filesForDownload)
-            )}`}
-            >
-            Download my solution
-          </Button>
+          {showDownloadButton
+            ? <Button
+                block={true}
+                bsSize='lg'
+                bsStyle='primary'
+                className='btn-primary-invert'
+                download={`${dashedName}.json`}
+                href={`data:text/json;charset=utf-8,${encodeURIComponent(
+                  JSON.stringify(filesForDownload)
+                )}`}
+                >
+                Download my solution
+              </Button>
+            : null
+          }
         </Modal.Footer>
       </Modal>
     );
