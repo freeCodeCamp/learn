@@ -1,6 +1,13 @@
 .map-ui {
   height: 100%;
   max-height: calc(100vh - (45px + 1.45rem));
+  margin-left: 35px;
+}
+
+@media screen, (max-width: 630px) {
+  .map-ui {
+    margin: 0 auto;
+  }
 }
 
 .map-ui ul {
@@ -22,4 +29,12 @@
 
 li.open > .map-title svg {
   transform: rotate(90deg);
+}
+
+.map-challenge-title {
+  margin-bottom: 0.25rem;
+}
+
+.map-challenge-title-completed {
+  opacity: 0.5;
 }

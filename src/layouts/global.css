@@ -624,6 +624,10 @@ pre tt:after {
   }
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+}
+
 .fcc-modal {
   background-color: #006400;
   color: #fff;
@@ -633,4 +637,23 @@ pre tt:after {
   color: #fff;
   font-size: 28px;
   text-shadow: none;
+}
+
+.btn-primary-invert {
+  color: #006400;
+  background-color: #fff;
+  border-color: #006400;
+}
+
+.btn-primary-invert:hover, .btn-primary-invert:focus, .btn-primary-invert:active {
+  color: #006400;
+  border-color: #006400;
+}
+
+.btn-primary-invert.btn-primary:hover {
+  color: #fff;
+}
+
+.btn-primary-link > a {
+  color: #fff;
 }

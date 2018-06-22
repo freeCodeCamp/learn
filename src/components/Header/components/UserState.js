@@ -1,64 +1,51 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import Spinner from 'react-spinkit';
 
-import { auth } from '../../../auth';
 import {
-  fetchUserComplete,
   isSignedInSelector,
-  userSelector,
-  updateUserSignedIn
+  userStateLoadingSelector
 } from '../../../redux/app';
 import Login from './Login';
 import SignedIn from './SignedIn';
 
 const mapStateToProps = createSelector(
+  userStateLoadingSelector,
   isSignedInSelector,
-  userSelector,
-  (isSignedIn, { name, email }) => ({ isSignedIn, name, email })
+  (showLoading, isSignedIn) => ({
+    isSignedIn,
+    showLoading
+  })
 );
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ updateUserSignedIn, fetchUserComplete }, dispatch);
 
 const propTypes = {
   email: PropTypes.string,
-  fetchUserComplete: PropTypes.func.isRequired,
   isSignedIn: PropTypes.bool,
   name: PropTypes.string,
-  updateUserSignedIn: PropTypes.func.isRequired
+  showLoading: PropTypes.bool
 };
 
 class UserState extends PureComponent {
-  componentDidMount() {
-    const isAuth = auth.isAuthenticated();
-    if (isAuth) {
-      this.props.fetchUserComplete(auth.getUser());
-    }
-    this.props.updateUserSignedIn(isAuth);
-  }
-
-  componentDidUpdate(prevProps) {
-    const isAuth = auth.isAuthenticated();
-    if (prevProps.isSignedIn && !isAuth) {
-      this.props.fetchUserComplete(auth.getUser());
-      this.props.updateUserSignedIn(isAuth);
-    }
-  }
-
   render() {
-    const { isSignedIn, name, email } = this.props;
-    return isSignedIn && (name || email) ? (
-      <SignedIn email={email} logout={auth.logout} name={name} />
-    ) : (
-      <Login login={auth.login} />
-    );
+    const { isSignedIn, showLoading } = this.props;
+    if (showLoading) {
+      return (
+        <Spinner
+          className='user-state-spinner'
+          color='white'
+          fadeIn='none'
+          height='40px'
+          name='line-scale'
+        />
+      );
+    }
+    return isSignedIn ? <SignedIn /> : <Login />;
   }
 }
 
 UserState.displayName = 'UserState';
 UserState.propTypes = propTypes;
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserState);
+export default connect(mapStateToProps)(UserState);

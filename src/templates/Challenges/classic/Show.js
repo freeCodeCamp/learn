@@ -10,7 +10,6 @@ import { ReflexContainer, ReflexSplitter, ReflexElement } from 'react-reflex';
 import Editor from './Editor';
 import Preview from '../components/Preview';
 import SidePanel from '../components/Side-Panel';
-import TestSuite from '../components/Test-Suite';
 import Output from '../components/Output';
 import CompletionModal from '../components/CompletionModal';
 import HelpModal from '../components/HelpModal';
@@ -32,8 +31,8 @@ import {
 } from '../redux';
 
 import './classic.css';
-import ToolPanel from '../components/Tool-Panel';
-import Spacer from '../../../components/util/Spacer';
+
+import decodeHTMLEntities from '../../../../utils/decodeHTMLEntities';
 
 const mapStateToProps = createSelector(
   challengeFilesSelector,
@@ -85,6 +84,27 @@ const propTypes = {
 };
 
 class ShowClassic extends PureComponent {
+  constructor() {
+    super();
+
+    this.resizeProps = {
+      onStopResize: this.onStopResize.bind(this),
+      onResize: this.onResize.bind(this)
+    };
+
+    this.state = {
+      resizing: false
+    };
+  }
+
+  onResize() {
+    this.setState({ resizing: true });
+  }
+
+  onStopResize() {
+    this.setState({ resizing: false });
+  }
+
   componentDidMount() {
     const {
       challengeMounted,
@@ -92,12 +112,14 @@ class ShowClassic extends PureComponent {
       initTests,
       updateChallengeMeta,
       updateSuccessMessage,
-      data: { challengeNode: { files, title, fields: { tests } } },
+      data: {
+        challengeNode: { files, title, fields: { tests }, challengeType }
+      },
       pathContext: { challengeMeta }
     } = this.props;
     createFiles(files);
     initTests(tests);
-    updateChallengeMeta({ ...challengeMeta, title });
+    updateChallengeMeta({ ...challengeMeta, title, challengeType });
     updateSuccessMessage(randomCompliment());
     challengeMounted(challengeMeta.id);
   }
@@ -111,7 +133,12 @@ class ShowClassic extends PureComponent {
       updateChallengeMeta,
       updateSuccessMessage,
       data: {
-        challengeNode: { files, title: currentTitle, fields: { tests } }
+        challengeNode: {
+          files,
+          title: currentTitle,
+          fields: { tests },
+          challengeType
+        }
       },
       pathContext: { challengeMeta }
     } = this.props;
@@ -119,7 +146,11 @@ class ShowClassic extends PureComponent {
       updateSuccessMessage(randomCompliment());
       createFiles(files);
       initTests(tests);
-      updateChallengeMeta({ ...challengeMeta, title: currentTitle });
+      updateChallengeMeta({
+        ...challengeMeta,
+        title: currentTitle,
+        challengeType
+      });
       challengeMounted(challengeMeta.id);
     }
   }
@@ -136,45 +167,56 @@ class ShowClassic extends PureComponent {
         }
       },
       files,
-      tests,
       output
     } = this.props;
     const editors = Object.keys(files)
       .map(key => files[key])
       .map((file, index) => (
-        <Fragment key={file.key + index}>
-          {index !== 0 && <ReflexSplitter />}
-          <ReflexElement flex={1}>
+        <ReflexContainer key={file.key + index} orientation='horizontal'>
+          {index !== 0 && (
+            <ReflexSplitter propagate={true} {...this.resizeProps} />
+          )}
+          <ReflexElement
+            flex={1}
+            propagateDimensions={true}
+            renderOnResize={true}
+            renderOnResizeRate={20}
+            {...this.resizeProps}
+            >
             <Editor {...file} fileKey={file.key} />
           </ReflexElement>
-          {index + 1 === Object.keys(files).length && <ReflexSplitter />}
+          {index + 1 === Object.keys(files).length && (
+            <ReflexSplitter propagate={true} {...this.resizeProps} />
+          )}
           {index + 1 === Object.keys(files).length ? (
-            <ReflexElement flex={0.25}>
+            <ReflexElement
+              flex={0.25}
+              propagateDimensions={true}
+              renderOnResize={true}
+              renderOnResizeRate={20}
+              {...this.resizeProps}
+              >
               <Output
                 defaultOutput={`
 /**
-* Your output will go here.
-* Any console.log() statements
-* will appear in here as well.
+* Your test output will go here.
 */
 `}
-                output={output}
+                output={decodeHTMLEntities(output)}
               />
             </ReflexElement>
           ) : null}
-        </Fragment>
+        </ReflexContainer>
       ));
-
     const showPreview =
       challengeType === challengeTypes.html ||
       challengeType === challengeTypes.modern;
-    const blockNameTitle = `${blockName} - ${title}`;
+    const blockNameTitle = `${blockName}: ${title}`;
     return (
       <Fragment>
         <Helmet title={`${blockNameTitle} | Learn freeCodeCamp`} />
-        <ToolPanel />
         <ReflexContainer orientation='vertical'>
-          <ReflexElement flex={1}>
+          <ReflexElement flex={1} {...this.resizeProps}>
             <SidePanel
               className='full-height'
               description={description}
@@ -182,18 +224,20 @@ class ShowClassic extends PureComponent {
               title={blockNameTitle}
             />
           </ReflexElement>
-          <ReflexSplitter />
-          <ReflexElement flex={1}>
-            <ReflexContainer orientation='horizontal'>
-              {editors}
-            </ReflexContainer>
+          <ReflexSplitter propagate={true} {...this.resizeProps} />
+          <ReflexElement flex={1} {...this.resizeProps}>
+            {editors}
           </ReflexElement>
-          <ReflexSplitter />
-          <ReflexElement flex={0.5}>
-            {showPreview ? <Preview className='full-height' /> : null}
-            <Spacer />
-            <TestSuite tests={tests} />
-          </ReflexElement>
+          {showPreview &&
+            <ReflexSplitter propagate={true} {...this.resizeProps} />}
+          {showPreview ? (
+            <ReflexElement flex={0.7} {...this.resizeProps}>
+              <Preview
+                className='full-height'
+                disableIframe={this.state.resizing}
+              />
+            </ReflexElement>
+          ) : null}
         </ReflexContainer>
 
         <CompletionModal />

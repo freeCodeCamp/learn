@@ -3,30 +3,36 @@ import PropTypes from 'prop-types';
 import ReactDom from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button } from 'react-bootstrap';
 
 import ChallengeTitle from './Challenge-Title';
 import ChallengeDescription from './Challenge-Description';
+import ToolPanel from './Tool-Panel';
+import TestSuite from './Test-Suite';
 import Spacer from '../../../components/util/Spacer';
 
-import { initConsole, openModal } from '../redux';
+import { initConsole, challengeTestsSelector } from '../redux';
+import { createSelector } from 'reselect';
+import './side-panel.css';
 
-const mapStateToProps = () => ({});
+const mapStateToProps = createSelector(challengeTestsSelector, tests => ({
+  tests
+}));
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      initConsole,
-      openHelpModal: () => openModal('help')
+      initConsole
     },
     dispatch
   );
+
+// const MathJax = global.MathJax;
 
 const propTypes = {
   description: PropTypes.arrayOf(PropTypes.string),
   guideUrl: PropTypes.string,
   initConsole: PropTypes.func.isRequired,
-  openHelpModal: PropTypes.func.isRequired,
+  tests: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string
 };
 
@@ -34,13 +40,20 @@ export class SidePanel extends PureComponent {
   constructor(props) {
     super(props);
     this.bindTopDiv = this.bindTopDiv.bind(this);
+    // MathJax.Hub.Config({
+    //   tex2jax: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+    // });
   }
 
   componentDidMount() {
+    // MathJax.Hub.Queue(['Typeset', MathJax.Hub,
+    // document.querySelector('.challenge-instructions')]);
     this.props.initConsole('');
   }
 
   componentDidUpdate(prevProps) {
+    // MathJax.Hub.Queue(['Typeset', MathJax.Hub,
+    // document.querySelector('.challenge-instructions')]);
     const { title, initConsole } = this.props;
     if (title !== prevProps.title) {
       initConsole('');
@@ -56,7 +69,7 @@ export class SidePanel extends PureComponent {
   }
 
   render() {
-    const { title, description, guideUrl, openHelpModal } = this.props;
+    const { title, description, guideUrl, tests } = this.props;
     return (
       <div className='instructions-panel' role='complementary'>
         <div ref={this.bindTopDiv} />
@@ -65,29 +78,8 @@ export class SidePanel extends PureComponent {
           <ChallengeTitle>{title}</ChallengeTitle>
           <ChallengeDescription description={description} />
         </div>
-        <Spacer />
-        {guideUrl ? (
-          <div>
-            <Button
-              block={true}
-              bsStyle='primary'
-              className='btn-big'
-              href={guideUrl}
-              target='_blank'
-              >
-              Get a hint
-            </Button>
-            <div className='button-spacer' />
-          </div>
-        ) : null}
-        <Button
-          block={true}
-          bsStyle='primary'
-          className='btn-big'
-          onClick={openHelpModal}
-          >
-          Ask for help on the forum
-        </Button>
+        <ToolPanel guideUrl={guideUrl} />
+        <TestSuite tests={tests} />
       </div>
     );
   }

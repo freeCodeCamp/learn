@@ -1,17 +1,16 @@
 import React from 'react';
 
-const propTypes = {};
-
-function GreenPass() {
+function GreenPass(props) {
   return (
     <svg
       height='50'
       viewBox='0 0 200 200'
       width='50'
       xmlns='http://www.w3.org/2000/svg'
+      {...props}
       >
       <g>
-        <title>Test Passed</title>
+        <title>Passed</title>
         <circle
           cx='100'
           cy='99'
@@ -52,6 +51,5 @@ function GreenPass() {
 }
 
 GreenPass.displayName = 'GreenPass';
-GreenPass.propTypes = propTypes;
 
 export default GreenPass;

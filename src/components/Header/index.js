@@ -1,5 +1,9 @@
 import React from 'react';
 import Link from 'gatsby-link';
+import FCCSearch from 'react-freecodecamp-search';
+
+import NavLogo from './components/NavLogo';
+import UserState from './components/UserState';
 
 import './header.css';
 
@@ -7,19 +11,19 @@ function Header() {
   return (
     <header>
       <nav id='top-nav'>
-        <Link className='home-link' to='/'>
-          <img
-            alt='Logo - freeCodeCamp | Learn to code'
-            src='https://s3.amazonaws.com/freecodecamp/freecodecamp_logo.svg'
-            title='freeCodeCamp | Learn to code'
-          />
-        </Link>
+        <a className='home-link' href='https://freecodecamp.org'>
+          <NavLogo />
+        </a>
+        <FCCSearch />
         <ul id='top-right-nav'>
           <li>
-            <a href='https://learn.freecodecamp.org'>Learn</a>
+            <Link to='/'>Curriculum</Link>
           </li>
           <li>
-            <a href='https://forum.freecodecamp.org'>Forum</a>
+            <a href='https://forum.freecodecamp.org' target='_blank'>Forum</a>
+          </li>
+          <li>
+            <UserState />
           </li>
         </ul>
       </nav>

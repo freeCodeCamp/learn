@@ -8,6 +8,7 @@ import { executeChallenge, updateFile } from '../redux';
 
 const propTypes = {
   contents: PropTypes.string,
+  dimensions: PropTypes.object,
   executeChallenge: PropTypes.func.isRequired,
   ext: PropTypes.string,
   fileKey: PropTypes.string,
@@ -41,7 +42,12 @@ class Editor extends PureComponent {
         enabled: false
       },
       selectOnLineNumbers: true,
-      wordWrap: 'on'
+      wordWrap: 'on',
+      scrollbar: {
+        horizontal: 'hidden',
+        vertical: 'visible',
+        verticalHasArrows: true
+      }
     };
 
     this._editor = null;
@@ -70,7 +76,6 @@ class Editor extends PureComponent {
   focusEditor(e) {
     // e key to focus editor
     if (e.keyCode === 69) {
-      console.log('focusing');
       this._editor.focus();
     }
   }
@@ -78,6 +83,12 @@ class Editor extends PureComponent {
   onChange(editorValue) {
     const { updateFile, fileKey } = this.props;
     updateFile({ key: fileKey, editorValue });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.dimensions !== prevProps.dimensions && this._editor) {
+      this._editor.layout();
+    }
   }
 
   render() {
@@ -90,7 +101,7 @@ class Editor extends PureComponent {
           language={modeMap[ext]}
           onChange={::this.onChange}
           options={this.options}
-          theme='vs-dark'
+          theme='vs'
           value={contents}
         />
       </div>

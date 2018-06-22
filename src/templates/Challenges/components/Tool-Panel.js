@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -7,43 +7,66 @@ import { Button } from 'react-bootstrap';
 
 import './tool-panel.css';
 import { openModal, executeChallenge } from '../redux';
-import { toggleMapModal } from '../../../redux/app';
 
 const mapStateToProps = () => ({});
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       executeChallenge,
-      openResetModal: () => openModal('reset'),
-      toggleMapModal
+      openHelpModal: () => openModal('help'),
+      openResetModal: () => openModal('reset')
     },
     dispatch
   );
 
 const propTypes = {
   executeChallenge: PropTypes.func.isRequired,
-  openResetModal: PropTypes.func.isRequired,
-  toggleMapModal: PropTypes.func.isRequired
+  guideUrl: PropTypes.string,
+  openHelpModal: PropTypes.func.isRequired,
+  openResetModal: PropTypes.func.isRequired
 };
 
-function ToolPanel({ executeChallenge, openResetModal, toggleMapModal }) {
+function ToolPanel({
+  executeChallenge,
+  openHelpModal,
+  openResetModal,
+  guideUrl
+}) {
   return (
-    <div className='tool-panel'>
-      <div id='left-tool-panel sub-panel'>
-        <Button bsStyle='default' onClick={toggleMapModal}>
-          View the Curriculum
-        </Button>
-      </div>
-      <div id='centre-tool-panel sub-panel'>
-        <Button bsStyle='primary' onClick={executeChallenge}>
+    <Fragment>
+      <div className='tool-panel-group'>
+        <Button block={true} bsStyle='primary' onClick={executeChallenge}>
           Run the Tests
         </Button>
-        <Button bsStyle='default' onClick={openResetModal}>
+        <Button
+          block={true}
+          bsStyle='primary'
+          className='btn-primary-invert'
+          onClick={openResetModal}
+          >
           Reset All Code
         </Button>
+        {guideUrl ? (
+          <Button
+            block={true}
+            bsStyle='primary'
+            className='btn-primary-invert'
+            href={guideUrl}
+            target='_blank'
+            >
+            Get a hint
+          </Button>
+        ) : null}
+        <Button
+          block={true}
+          bsStyle='primary'
+          className='btn-primary-invert'
+          onClick={openHelpModal}
+          >
+          Ask for help
+        </Button>
       </div>
-      <div id='right-tool-panel sub-panel' />
-    </div>
+    </Fragment>
   );
 }
 

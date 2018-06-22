@@ -18,11 +18,13 @@ import {
   updateChallengeMeta,
   createFiles,
   updateSuccessMessage,
-  openModal
+  openModal,
+  updateProjectFormValues
 } from '../redux';
 import { frontEndProject } from '../../../../utils/challengeTypes';
 
 import './project.css';
+import Spacer from '../../../components/util/Spacer';
 
 const mapStateToProps = () => ({});
 const mapDispatchToProps = dispatch =>
@@ -30,6 +32,7 @@ const mapDispatchToProps = dispatch =>
     {
       updateChallengeMeta,
       createFiles,
+      updateProjectFormValues,
       updateSuccessMessage,
       openCompletionModal: () => openModal('completion')
     },
@@ -46,6 +49,7 @@ const propTypes = {
     challengeMeta: PropTypes.object
   }),
   updateChallengeMeta: PropTypes.func.isRequired,
+  updateProjectFormValues: PropTypes.func.isRequired,
   updateSuccessMessage: PropTypes.func.isRequired
 };
 
@@ -53,21 +57,21 @@ export class Project extends PureComponent {
   componentDidMount() {
     const {
       createFiles,
-      data: { challengeNode: { title } },
+      data: { challengeNode: { title, challengeType } },
       pathContext: { challengeMeta },
       updateChallengeMeta,
       updateSuccessMessage
     } = this.props;
     createFiles({});
     updateSuccessMessage(randomCompliment());
-    return updateChallengeMeta({ ...challengeMeta, title });
+    return updateChallengeMeta({ ...challengeMeta, title, challengeType });
   }
 
   componentDidUpdate(prevProps) {
     const { data: { challengeNode: { title: prevTitle } } } = prevProps;
     const {
       createFiles,
-      data: { challengeNode: { title: currentTitle } },
+      data: { challengeNode: { title: currentTitle, challengeType } },
       pathContext: { challengeMeta },
       updateChallengeMeta,
       updateSuccessMessage
@@ -75,7 +79,11 @@ export class Project extends PureComponent {
     updateSuccessMessage(randomCompliment());
     if (prevTitle !== currentTitle) {
       createFiles({});
-      updateChallengeMeta({ ...challengeMeta, title: currentTitle });
+      updateChallengeMeta({
+        ...challengeMeta,
+        title: currentTitle,
+        challengeType
+      });
     }
   }
 
@@ -90,14 +98,15 @@ export class Project extends PureComponent {
           guideUrl
         }
       },
-      openCompletionModal
+      openCompletionModal,
+      updateProjectFormValues
     } = this.props;
     const isFrontEnd = challengeType === frontEndProject;
+
     const blockNameTitle = `${blockName} - ${title}`;
     return (
       <Fragment>
         <Helmet title={`${blockNameTitle} | Learn freeCodeCamp}`} />
-        <ToolPanel />
         <div className='project-show-wrapper'>
           <SidePanel
             className='full-height'
@@ -108,7 +117,10 @@ export class Project extends PureComponent {
           <ProjectForm
             isFrontEnd={isFrontEnd}
             openModal={openCompletionModal}
+            updateProjectForm={updateProjectFormValues}
           />
+          <ToolPanel />
+          <Spacer />
         </div>
         <CompletionModal />
         <HelpModal />
