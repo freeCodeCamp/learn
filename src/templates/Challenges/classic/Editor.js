@@ -51,17 +51,11 @@ class Editor extends PureComponent {
     };
 
     this._editor = null;
-
-    this.focusEditor = this.focusEditor.bind(this);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keyup', this.focusEditor);
   }
 
   editorDidMount(editor, monaco) {
     this._editor = editor;
-    document.addEventListener('keyup', this.focusEditor);
+    this._editor.focus();
     this._editor.addAction({
       id: 'execute-challenge',
       label: 'Run tests',
@@ -72,14 +66,7 @@ class Editor extends PureComponent {
       run: this.props.executeChallenge
     });
   }
-
-  focusEditor(e) {
-    // e key to focus editor
-    if (e.keyCode === 69) {
-      this._editor.focus();
-    }
-  }
-
+  
   onChange(editorValue) {
     const { updateFile, fileKey } = this.props;
     updateFile({ key: fileKey, editorValue });
