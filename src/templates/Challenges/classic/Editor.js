@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import MonacoEditor from 'react-monaco-editor';
 
 import { executeChallenge, updateFile } from '../redux';
+import { userSelector } from '../../../redux/app';
+import { createSelector } from 'reselect';
 
 const propTypes = {
   contents: PropTypes.string,
@@ -12,10 +14,14 @@ const propTypes = {
   executeChallenge: PropTypes.func.isRequired,
   ext: PropTypes.string,
   fileKey: PropTypes.string,
+  theme: PropTypes.string,
   updateFile: PropTypes.func.isRequired
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = createSelector(
+  userSelector,
+  ({ theme = 'default' }) => ({ theme })
+);
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -42,7 +48,12 @@ class Editor extends PureComponent {
         enabled: false
       },
       selectOnLineNumbers: true,
-      wordWrap: 'on'
+      wordWrap: 'on',
+      scrollbar: {
+        horizontal: 'hidden',
+        vertical: 'visible',
+        verticalHasArrows: true
+      }
     };
 
     this._editor = null;
@@ -56,6 +67,7 @@ class Editor extends PureComponent {
 
   editorDidMount(editor, monaco) {
     this._editor = editor;
+    this._editor.focus();
     document.addEventListener('keyup', this.focusEditor);
     this._editor.addAction({
       id: 'execute-challenge',
@@ -87,16 +99,18 @@ class Editor extends PureComponent {
   }
 
   render() {
-    const { contents, ext } = this.props;
+    const { contents, ext, theme, fileKey } = this.props;
+    const editorTheme = theme === 'night' ? 'vs-dark' : 'vs';
     return (
       <div className='classic-editor editor'>
         <base href='/' />
         <MonacoEditor
           editorDidMount={::this.editorDidMount}
+          key={`${editorTheme}-${fileKey}`}
           language={modeMap[ext]}
           onChange={::this.onChange}
           options={this.options}
-          theme='vs'
+          theme={editorTheme}
           value={contents}
         />
       </div>

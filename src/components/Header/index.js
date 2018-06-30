@@ -11,16 +11,18 @@ function Header() {
   return (
     <header>
       <nav id='top-nav'>
-        <Link className='home-link' to='/'>
+        <a className='home-link' href='https://freecodecamp.org'>
           <NavLogo />
-        </Link>
+        </a>
         <FCCSearch />
         <ul id='top-right-nav'>
           <li>
             <Link to='/'>Curriculum</Link>
           </li>
           <li>
-            <a href='https://forum.freecodecamp.org' target='_blank'>Forum</a>
+            <a href='https://forum.freecodecamp.org' target='_blank'>
+              Forum
+            </a>
           </li>
           <li>
             <UserState />

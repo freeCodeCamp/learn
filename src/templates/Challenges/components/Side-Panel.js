@@ -12,6 +12,7 @@ import Spacer from '../../../components/util/Spacer';
 
 import { initConsole, challengeTestsSelector } from '../redux';
 import { createSelector } from 'reselect';
+import './side-panel.css';
 
 const mapStateToProps = createSelector(challengeTestsSelector, tests => ({
   tests
@@ -25,6 +26,8 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
+// const MathJax = global.MathJax;
+
 const propTypes = {
   description: PropTypes.arrayOf(PropTypes.string),
   guideUrl: PropTypes.string,
@@ -37,13 +40,20 @@ export class SidePanel extends PureComponent {
   constructor(props) {
     super(props);
     this.bindTopDiv = this.bindTopDiv.bind(this);
+    // MathJax.Hub.Config({
+    //   tex2jax: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+    // });
   }
 
   componentDidMount() {
+    // MathJax.Hub.Queue(['Typeset', MathJax.Hub,
+    // document.querySelector('.challenge-instructions')]);
     this.props.initConsole('');
   }
 
   componentDidUpdate(prevProps) {
+    // MathJax.Hub.Queue(['Typeset', MathJax.Hub,
+    // document.querySelector('.challenge-instructions')]);
     const { title, initConsole } = this.props;
     if (title !== prevProps.title) {
       initConsole('');
