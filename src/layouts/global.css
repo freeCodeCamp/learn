@@ -761,18 +761,15 @@ h1, h2, h3, h4, h5, h6 {
 .night {
   color: #fff;
 }
-.night .view-lines {
-  background: #333333;
-  color: #fff;
-}
 .night .margin-view-overlays {
   background: #333333;
   color: #fff;
   border-left: 1px solid #555555;
 }
-.night .test-result:nth-child(odd) {
-  color: #333;
-}
+.night .test-result:nth-child(odd) { 
+  color: #fff; 
+  background: #2A2A2A; 
+} 
 .night .monaco-editor .margin-view-overlays .line-numbers {
   color: #fff;
 }
