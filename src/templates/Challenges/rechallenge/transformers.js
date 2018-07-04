@@ -35,7 +35,8 @@ const console$logReg = /(?:\b)console(\.log\S+)/g;
 const NBSPReg = new RegExp(String.fromCharCode(160), 'g');
 
 const isJS = matchesProperty('ext', 'js');
-const testHTMLJS = overSome(isJS, matchesProperty('ext', 'html'));
+const testHTML = matchesProperty('ext', 'html');
+const testHTMLJS = overSome(isJS, testHTML);
 export const testJS$JSX = overSome(isJS, matchesProperty('ext', 'jsx'));
 
 // work around the absence of multi-flile editing
@@ -69,6 +70,20 @@ export const proxyLoggerTransformer = partial(
       return 'window.__console' + methodCall;
     })
 );
+
+export const sanitizeHTML = cond([
+  [
+    testHTML,
+    partial(vinyl.transformContents, contents => {
+      let div = document.implementation
+                .createHTMLDocument()
+                .createElement('div');
+      div.innerHTML = contents;
+      return div.innerHTML;
+    })
+  ],
+  [stubTrue, identity]
+]);
 
 export const replaceNBSP = cond([
   [
@@ -112,7 +127,8 @@ export const sassTransformer = cond([
   [stubTrue, identity]
 ]);
 
-export const _transformers = [replaceNBSP, babelTransformer, sassTransformer];
+export const _transformers = [
+  replaceNBSP, babelTransformer, sassTransformer, sanitizeHTML];
 
 export function applyTransformers(file, transformers = _transformers) {
   return transformers.reduce((obs, transformer) => {
