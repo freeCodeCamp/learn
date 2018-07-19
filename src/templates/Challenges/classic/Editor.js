@@ -39,6 +39,34 @@ const modeMap = {
   jsx: 'javascript'
 };
 
+var monacoThemesDefined = false;
+const defineMonacoThemes = (monaco) => {
+  if (monacoThemesDefined) {
+    return;
+  }
+  monacoThemesDefined = true;
+  const yellowCollor = 'FFFF00';
+  const lightBlueColor = '9CDCFE';
+  const darkBlueColor = '00107E';
+  monaco.editor.defineTheme('vs-dark-custom', {
+    base: 'vs-dark',
+    inherit: true,
+    rules: [
+      { token: 'delimiter.js', foreground: lightBlueColor },
+      { token: 'delimiter.parenthesis.js', foreground: yellowCollor },
+      { token: 'delimiter.array.js', foreground: yellowCollor },
+      { token: 'delimiter.bracket.js', foreground: yellowCollor }
+    ]
+  });
+  monaco.editor.defineTheme('vs-custom', {
+    base: 'vs',
+    inherit: true,
+    rules: [
+      { token: 'identifier.js', foreground: darkBlueColor }
+    ]
+  });
+};
+
 class Editor extends PureComponent {
   constructor(...props) {
     super(...props);
@@ -66,26 +94,7 @@ class Editor extends PureComponent {
   }
 
   editorWillMount(monaco) {
-    const yellowCollor = 'FFFF00';
-    const lightBlueColor = '9CDCFE';
-    const darkBlueColor = '00107E';
-    monaco.editor.defineTheme('vs-dark-custom', {
-      base: 'vs-dark',
-      inherit: true,
-      rules: [
-        { token: 'delimiter.js', foreground: lightBlueColor },
-        { token: 'delimiter.parenthesis.js', foreground: yellowCollor },
-        { token: 'delimiter.array.js', foreground: yellowCollor },
-        { token: 'delimiter.bracket.js', foreground: yellowCollor }
-      ]
-    });
-    monaco.editor.defineTheme('vs-custom', {
-      base: 'vs',
-      inherit: true,
-      rules: [
-        { token: 'identifier.js', foreground: darkBlueColor }
-      ]
-    });
+    defineMonacoThemes(monaco);
   }
 
   editorDidMount(editor, monaco) {
