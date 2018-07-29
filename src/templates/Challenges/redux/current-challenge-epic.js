@@ -1,7 +1,7 @@
 import { ofType } from 'redux-observable';
 
 import { types } from './';
-import { filter, switchMap, catchError, mapTo } from 'rxjs/operators';
+import { filter, switchMap, catchError, mergeMap } from 'rxjs/operators';
 import {
   isSignedInSelector,
   currentChallengeIdSelector
@@ -21,7 +21,7 @@ function currentChallengeEpic(action$, { getState }) {
         _csrf
       })
     ),
-    mapTo({ type: 'currentChallengeUpdateComplete' }),
+    mergeMap(() => [{ type: 'currentChallengeUpdateComplete' }, { type: 'app.fetchUser' }]),
     catchError(() => of({ type: 'current-challenge-update-error' }))
   );
 }

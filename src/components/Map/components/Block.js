@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -7,7 +8,7 @@ import Link from 'gatsby-link';
 
 import ga from '../../../analytics';
 import { makeExpandedBlockSelector, toggleBlock } from '../redux';
-import { userSelector } from '../../../redux/app';
+import { userSelector, currentChallengeIdSelector } from '../../../redux/app';
 import Caret from '../../icons/Caret';
 /* eslint-disable max-len */
 import GreenPass from '../../../templates/Challenges/components/icons/GreenPass';
@@ -19,8 +20,10 @@ const mapStateToProps = (state, ownProps) => {
   return createSelector(
     expandedSelector,
     userSelector,
-    (isExpanded, { completedChallenges = [] }) => ({
+    currentChallengeIdSelector,
+    (isExpanded, { completedChallenges = [] }, currentChallengeId) => ({
       isExpanded,
+      currentChallengeId,
       completedChallenges: completedChallenges.map(({ id }) => id)
     })
   )(state);
@@ -33,6 +36,7 @@ const propTypes = {
   blockDashedName: PropTypes.string,
   challenges: PropTypes.array,
   completedChallenges: PropTypes.arrayOf(PropTypes.string),
+  currentChallengeId: PropTypes.string,
   intro: PropTypes.shape({
     fields: PropTypes.shape({ slug: PropTypes.string.isRequired }),
     frontmatter: PropTypes.shape({
@@ -53,6 +57,10 @@ export class Block extends PureComponent {
     this.handleBlockClick = this.handleBlockClick.bind(this);
     this.handleChallengeClick = this.handleChallengeClick.bind(this);
     this.renderChallenges = this.renderChallenges.bind(this);
+  }
+
+  componentDidMount() {
+    this.scrollToCurrentChallenge();
   }
 
   handleBlockClick() {
@@ -81,18 +89,33 @@ export class Block extends PureComponent {
     );
   }
 
-  renderChallenges(intro = {}, challenges = []) {
+  scrollToCurrentChallenge() {
+    const currentChallengeNode = this.refs.currentChallenge;
+    if (currentChallengeNode) {
+      const currentChallengeDomNode = ReactDom.findDOMNode(currentChallengeNode);
+      setTimeout(() => {
+        currentChallengeDomNode.scrollIntoView({ behavior: 'smooth' });
+      }, 0);
+    }
+  }
+
+  renderChallenges(intro = {}, challenges = [], currentChallengeId='') {
     // TODO: Split this into a Challenge Component and add tests
     // TODO: The styles badge and map-badge on the completion span do not exist
     return [intro].concat(challenges).map((challenge, i) => {
       const completedClass = challenge.isCompleted
         ? ' map-challenge-title-completed'
         : '';
+      const ifCurrentChallenge = challenge.id === currentChallengeId;
+      const challengeItemProps = {
+        className: 'map-challenge-title' + completedClass,
+        key:  'map-challenge' + challenge.fields.slug
+      };
+      if (ifCurrentChallenge) {
+        challengeItemProps.ref = 'currentChallenge'
+      }
       return (
-        <li
-          className={'map-challenge-title' + completedClass}
-          key={'map-challenge' + challenge.fields.slug}
-          >
+        <li {...challengeItemProps}>
           <span className='badge map-badge'>
             {i !== 0 && this.renderCheckMark(challenge.isCompleted)}
           </span>
@@ -108,7 +131,7 @@ export class Block extends PureComponent {
   }
 
   render() {
-    const { completedChallenges, challenges, isExpanded, intro } = this.props;
+    const { completedChallenges, challenges, isExpanded, intro, currentChallengeId} = this.props;
     const { blockName } = challenges[0].fields;
     const challengesWithCompleted = challenges.map(challenge => {
       const { id } = challenge;
@@ -125,7 +148,7 @@ export class Block extends PureComponent {
         </div>
         <ul>
           {isExpanded
-            ? this.renderChallenges(intro, challengesWithCompleted)
+            ? this.renderChallenges(intro, challengesWithCompleted, currentChallengeId)
             : null}
         </ul>
       </li>
