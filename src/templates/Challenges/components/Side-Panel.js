@@ -69,7 +69,7 @@ export class SidePanel extends PureComponent {
   }
 
   render() {
-    const { title, description, guideUrl, tests } = this.props;
+    const { title, description, guideUrl, tests, tail } = this.props;
     return (
       <div className='instructions-panel' role='complementary'>
         <div ref={this.bindTopDiv} />
@@ -79,7 +79,7 @@ export class SidePanel extends PureComponent {
           <ChallengeDescription description={description} />
         </div>
         <ToolPanel guideUrl={guideUrl} />
-        <TestSuite tests={tests} />
+        <TestSuite tests={tests} tail={tail}/>
       </div>
     );
   }
