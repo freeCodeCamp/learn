@@ -11,7 +11,7 @@ import {
 import { ofType } from 'redux-observable';
 import { push } from 'react-router-redux';
 
-import { _csrf as csrfToken } from '../../../redux/cookieVaules';
+import { _csrf as csrfToken } from '../../../redux/cookieValues';
 
 import {
   backendFormValuesSelector,
