@@ -1,25 +1,25 @@
-exports.dasherize = function dasherize(name) {
+export function dasherize(name) {
   return ('' + name)
     .toLowerCase()
+    .trim()
     .replace(/\s/g, '-')
     .replace(/[^a-z0-9\-\.]/gi, '')
-    .replace(/\./g, '-')
-    .replace(/\:/g, '');
-};
+    .replace(/\./g, '-');
+}
 
-exports.nameify = function nameify(str) {
-  return ('' + str).replace(/[^a-zA-Z0-9\s]/g, '').replace(/\:/g, '');
-};
+// nameify'd strings are sometimes compared to unDasherize'd strings.  In order
+// for these to match nameify should depend on unDasherize.
+export function nameify(str) {
+  return unDasherize(dasherize(str));
+}
 
-exports.unDasherize = function unDasherize(name) {
-  return (
-    ('' + name)
-      // replace dash with space
-      .replace(/\-/g, ' ')
-      // strip nonalphanumarics chars except whitespace
-      .replace(/[^a-zA-Z\d\s]/g, '')
-      .trim()
-  );
-};
+export function unDasherize(name) {
+  return ('' + name)
+    // replace dash with space
+    .replace(/\-/g, ' ')
+    // strip nonalphanumarics chars except whitespace
+    .replace(/[^a-zA-Z\d\s]/g, '')
+    .trim();
+}
 
-exports.descriptionRegex = /\<blockquote|\<ol|\<h4|\<table/;
+export const descriptionRegex = /\<blockquote|\<ol|\<h4|\<table/;
