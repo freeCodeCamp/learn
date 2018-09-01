@@ -1,27 +1,25 @@
+/* global HOME_PATH */
 import React from 'react';
 import PropTypes from 'prop-types';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import { userSelector } from '../../../redux/app';
 
-const propTypes = {
-  email: PropTypes.string,
-  logout: PropTypes.func.isRequired,
-  name: PropTypes.string
-};
+const mapStateToProps = createSelector(userSelector, ({ picture }) => ({
+  picture
+}));
 
-function SignedIn({ email, name, logout }) {
+function SignedIn({ picture }) {
   return (
-    <DropdownButton
-      bsStyle='default'
-      id='signedin-dropdown-button'
-      title={name ? name : email}
-      >
-      <MenuItem onClick={logout}>Log Out</MenuItem>
-    </DropdownButton>
+    <a href={HOME_PATH + '/settings'}>
+      <img height='38px' src={picture} />
+    </a>
   );
 }
 
 SignedIn.displayName = 'SignedIn';
-SignedIn.propTypes = propTypes;
+SignedIn.propTypes = {
+  picture: PropTypes.string
+};
 
-export default SignedIn;
+export default connect(mapStateToProps)(SignedIn);

@@ -624,6 +624,13 @@ pre tt:after {
   }
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+}
+code[class*="language-"],pre[class*="language-"] {
+    text-shadow: none;
+}
+
 .fcc-modal {
   background-color: #006400;
   color: #fff;
@@ -633,4 +640,153 @@ pre tt:after {
   color: #fff;
   font-size: 28px;
   text-shadow: none;
+}
+
+.btn-primary-invert {
+  color: #006400;
+  background-color: #fff;
+  border-color: #006400;
+}
+
+.btn-primary-invert:hover, .btn-primary-invert:focus, .btn-primary-invert:active {
+  color: #006400;
+  border-color: #006400;
+}
+
+.btn-primary-invert.btn-primary:hover {
+  color: #fff;
+}
+
+.btn-primary-link > a {
+  color: #fff;
+}
+.night {
+  background-color: #333333;
+  color: #ccc;
+}
+.night .btn-group,
+.night .text-success,
+.night .challenges-list-header,
+.night .fcc-footer {
+  background-color: #333333;
+}
+.night hr {
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0)
+  );
+}
+.night .modal-dialog .modal-content {
+  background-color: #555555;
+}
+.night .modal-dialog .modal-content .btn-success,
+.night .modal-dialog .modal-content .btn-danger {
+  background: #ffffff;
+}
+.night .modal-dialog .modal-content .btn-danger:hover,
+.night .modal-dialog .modal-content .btn-danger:focus,
+.night .modal-dialog .modal-content .btn-danger:active {
+  background: #d9534f !important;
+}
+.night .modal-dialog .modal-header,
+.night .modal-dialog .modal-footer {
+  border: none;
+}
+.night .modal-dialog .fa-check-circle {
+  color: #004a00;
+}
+.night a,
+.night .input-group-addon,
+.night .challenge-instructions a,
+.night .challenge-instructions #MDN-links a {
+  color: #f8f8f8;
+}
+.night .intro-toc a {
+  color: #006400;
+}
+.night .fa-github-square {
+  color: darkgreen;
+}
+.night .fa-github-square:hover {
+  color: #ccc;
+}
+.night .black-text {
+  color: #111;
+}
+.night .green-text {
+  color: #8cca33;
+}
+.night code {
+  background-color: #242424;
+  color: #02a902;
+}
+.night .fcc-footer ahover {
+  background-color: #333333;
+}
+.night .btn-primary {
+  background-color: darkgreen;
+  border-color: #777;
+  color: #ccc;
+  transition: color 0.2s, background-color 0.2s;
+}
+.night .btn-primary:hover {
+  background-color: #ababab !important;
+  color: #333333 !important;
+}
+.night .cal-heatmap-container {
+  background-color: #333333;
+}
+.night .graph-rect {
+  fill: #ccc !important;
+}
+.night .table-striped > tbody > tr:nth-child(odd) {
+  background-color: #555555;
+}
+.night .table > thead > tr > th,
+.night .table > tbody > tr > th,
+.night .table > tfoot > tr > th,
+.night .table > thead > tr > td,
+.night .table > tbody > tr > td,
+.night .table > tfoot > tr > td {
+  border-color: #ccc;
+}
+.night .btn-toggle {
+  background-color: transparent;
+}
+.night .btn-toggle.active {
+  background-color: darkgreen;
+}
+.night .map-ui ul {
+  color: #fff;
+}
+.night {
+  color: #fff;
+}
+
+.night .test-result:nth-child(odd) { 
+  color: #fff; 
+  background: #2A2A2A; 
+} 
+
+.night .challenge-preview {
+  background: #fff;
+}
+.night code, .night pre, .night blockquote, .night .challenge-instructions blockquote{
+    background: #222;
+}
+.night pre, .night blockquote, .night .challenge-instructions blockquote {
+    border: 1px solid #111;
+}
+.night blockquote, .night .challenge-instructions blockquote {
+    color: #00bfb0;
+}
+
+.night .notfound-page-wrapper .quote-wrapper {
+  background-color: #222;
+}
+
+.night .notfound-page-wrapper .btn-curriculum {
+  color: #292f33;
 }

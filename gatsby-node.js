@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -103,6 +104,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 };
 
 const webpack = require('webpack');
+const RmServiceWorkerPlugin = require('webpack-remove-serviceworker-plugin');
 const generateBabelConfig = require('gatsby/dist/utils/babel-config');
 
 exports.modifyWebpackConfig = ({ config, stage }) => {
@@ -114,12 +116,16 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
   return generateBabelConfig(program, stage).then(babelConfig => {
     config.removeLoader('js').loader('js', {
       test: /\.jsx?$/,
+      /* eslint-disable max-len */
       exclude: modulePath => {
         return (
           /node_modules/.test(modulePath) &&
-          !(/node_modules\/(ansi-styles|chalk)/).test(modulePath)
+          !(/(ansi-styles|chalk|strict-uri-encode|react-freecodecamp-search)/).test(
+            modulePath
+          )
         );
       },
+      /* eslint-enable max-len*/
       loader: 'babel',
       query: babelConfig
     });
@@ -133,10 +139,14 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
     ]);
     config.plugin('DefinePlugin', webpack.DefinePlugin, [
       {
-        AUTH0_DOMAIN: JSON.stringify(process.env.AUTH0_DOMAIN),
-        AUTH0_CLIENT_ID: JSON.stringify(process.env.AUTH0_CLIENT_ID),
-        AUTH0_NAMESPACE: JSON.stringify(process.env.AUTH0_NAMESPACE)
+        HOME_PATH: JSON.stringify(
+          process.env.HOME_PATH || 'http://localhost:3000'
+        ),
+        STRIPE_PUBLIC_KEY: JSON.stringify(process.env.STRIPE_PULIC_KEY || '')
       }
+    ]);
+    config.plugin('RemoveServiceWorkerPlugin', RmServiceWorkerPlugin, [
+      { filename: 'sw.js' }
     ]);
   });
 };
@@ -145,7 +155,9 @@ exports.modifyBabelrc = ({ babelrc }) =>
   Object.assign({}, babelrc, {
     plugins: babelrc.plugins.concat([
       [
+        'transform-es2015-arrow-functions',
         'transform-imports',
+        'transform-function-bind',
         {
           'react-bootstrap': {
             transform: 'react-bootstrap/lib/${member}',

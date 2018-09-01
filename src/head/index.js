@@ -1,6 +1,7 @@
 import favicons from './favicons';
 import meta from './meta';
 import styleSheets from './styleSheets';
+// import mathjax from './mathjax';
 
 const metaAndStyleSheets = meta
   .concat(favicons, styleSheets)

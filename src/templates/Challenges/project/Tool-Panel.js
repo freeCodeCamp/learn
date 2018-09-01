@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 
-// import { submittingSelector } from './redux';
-import { toggleMapModal } from '../../../redux/app';
 import { openModal } from '../redux';
 
 const mapStateToProps = () => ({});
@@ -13,50 +11,40 @@ const mapStateToProps = () => ({});
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      openHelpModal: () => openModal('help'),
-      toggleMapModal
+      openHelpModal: () => openModal('help')
     },
     dispatch
   );
 
 const propTypes = {
   guideUrl: PropTypes.string,
-  openHelpModal: PropTypes.func.isRequired,
-  toggleMapModal: PropTypes.func.isRequired
+  openHelpModal: PropTypes.func.isRequired
 };
 
 export class ToolPanel extends PureComponent {
   render() {
-    const { guideUrl, openHelpModal, toggleMapModal } = this.props;
+    const { guideUrl, openHelpModal } = this.props;
     return (
-      <div className='tool-panel'>
-        <div id='left-tool-panel sub-panel'>
-          <Button bsStyle='default' onClick={toggleMapModal}>
-            View the Curriculum
-          </Button>
-        </div>
-        <div id='centre-tool-panel sub-panel' />
-        <div id='right-tool-panel sub-panel'>
-          {guideUrl && (
-            <Button
-              block={true}
-              bsStyle='primary'
-              className='btn-primary-ghost btn-big'
-              href={guideUrl}
-              target='_blank'
-              >
-              Get a hint
-            </Button>
-          )}
+      <div className='tool-panel-group project-tool-panel'>
+        {guideUrl && (
           <Button
             block={true}
             bsStyle='primary'
-            className='btn-primary-ghost btn-big'
-            onClick={openHelpModal}
+            className='btn-primary-invert'
+            href={guideUrl}
+            target='_blank'
             >
-            Ask for help on the forum
+            Get a hint
           </Button>
-        </div>
+        )}
+        <Button
+          block={true}
+          bsStyle='primary'
+          className='btn-primary-invert'
+          onClick={openHelpModal}
+          >
+          Ask for help
+        </Button>
       </div>
     );
   }

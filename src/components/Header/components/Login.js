@@ -1,20 +1,20 @@
+/* global HOME_PATH */
 import React from 'react';
-import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/lib/Button';
+import { Button } from 'react-bootstrap';
 
-const propTypes = {
-  login: PropTypes.func.isRequired
-};
-
-function Login({ login }) {
+function Login() {
   return (
-    <Button bsStyle='default' onClick={login}>
-      Login
+    <Button
+      bsStyle='default'
+      className='btn-cta'
+      href={HOME_PATH + '/signin'}
+      target='_blank'
+      >
+      Sign In
     </Button>
   );
 }
 
 Login.displayName = 'Login';
-Login.propTypes = propTypes;
 
 export default Login;
