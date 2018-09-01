@@ -20,7 +20,7 @@ function Header() {
             <Link to='/'>Curriculum</Link>
           </li>
           <li>
-            <a href={HOME_PATH + '/news'} target='_blank'>
+            <a href='https://freecodecamp.org/news' target='_blank'>
               News
             </a>
           </li>
