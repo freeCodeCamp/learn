@@ -10,6 +10,7 @@ import ChallengeDescription from '../components/Challenge-Description';
 import TestSuite from '../components/Test-Suite';
 import Output from '../components/Output';
 import CompletionModal from '../components/CompletionModal';
+import HelpModal from '../components/HelpModal';
 import ProjectToolPanel from '../project/Tool-Panel';
 import {
   executeChallenge,
@@ -157,6 +158,7 @@ export class BackEnd extends PureComponent {
           <Spacer />
         </Col>
         <CompletionModal />
+        <HelpModal/>
       </Row>
     );
   }
