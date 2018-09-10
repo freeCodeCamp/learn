@@ -18,6 +18,9 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e2e2e2;
 }
 
 .map-title>svg {
@@ -32,6 +35,10 @@ li.open > .map-title svg {
 
 .map-challenge-title {
   margin-bottom: 0.25rem;
+}
+
+.map-challenge-title a  {
+    color: #f8f8f8;
 }
 
 .map-challenge-title-completed {

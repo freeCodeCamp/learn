@@ -26,12 +26,13 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-// const MathJax = global.MathJax;
+const MathJax = global.MathJax;
 
 const propTypes = {
   description: PropTypes.arrayOf(PropTypes.string),
   guideUrl: PropTypes.string,
   initConsole: PropTypes.func.isRequired,
+  section: PropTypes.string,
   tests: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string
 };
@@ -40,20 +41,24 @@ export class SidePanel extends PureComponent {
   constructor(props) {
     super(props);
     this.bindTopDiv = this.bindTopDiv.bind(this);
-    // MathJax.Hub.Config({
-    //   tex2jax: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
-    // });
+    MathJax.Hub.Config({
+      tex2jax: { 
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        processEscapes: true,
+        processClass: 'rosetta-code'
+      }
+    });
   }
 
   componentDidMount() {
-    // MathJax.Hub.Queue(['Typeset', MathJax.Hub,
-    // document.querySelector('.challenge-instructions')]);
+    MathJax.Hub.Queue(['Typeset', MathJax.Hub,
+    document.querySelector('.rosetta-code')]);
     this.props.initConsole('');
   }
 
   componentDidUpdate(prevProps) {
-    // MathJax.Hub.Queue(['Typeset', MathJax.Hub,
-    // document.querySelector('.challenge-instructions')]);
+    MathJax.Hub.Queue(['Typeset', MathJax.Hub,
+    document.querySelector('.rosetta-code')]);
     const { title, initConsole } = this.props;
     if (title !== prevProps.title) {
       initConsole('');
@@ -69,14 +74,14 @@ export class SidePanel extends PureComponent {
   }
 
   render() {
-    const { title, description, guideUrl, tests } = this.props;
+    const { title, description, guideUrl, tests, section } = this.props;
     return (
       <div className='instructions-panel' role='complementary'>
         <div ref={this.bindTopDiv} />
         <Spacer />
         <div>
           <ChallengeTitle>{title}</ChallengeTitle>
-          <ChallengeDescription description={description} />
+          <ChallengeDescription section={section} description={description} />
         </div>
         <ToolPanel guideUrl={guideUrl} />
         <TestSuite tests={tests} />

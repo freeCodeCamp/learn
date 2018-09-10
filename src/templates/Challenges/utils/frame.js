@@ -13,14 +13,17 @@ const mainId = 'fcc-main-frame';
 const testId = 'fcc-test-frame';
 
 // base tag here will force relative links
-// within iframe to point to '/' instead of
+// within iframe to point to '' instead of
 // append to the current challenge url
+// this also allows in-page anchors to work properly
+// rather than load another instance of the learn
+//
 // if an error occurs during initialization
 // the __err prop will be set
 // This is then picked up in client/frame-runner.js during
 // runTestsInTestFrame below
 const createHeader = (id = mainId) => `
-  <base href='/' target='_blank'/>
+  <base href='' />
   <script>
     window.__frameId = '${id}';
     window.onerror = function(msg, url, ln, col, err) {
@@ -137,11 +140,12 @@ export const createMainFramer = (document, getState, proxyLogger) =>
     writeContentToFrame
   );
 
-export const createTestFramer = (document, getState, frameReady) =>
+export const createTestFramer = (document, getState, frameReady, proxyLogger) =>
   flow(
     createFrame(document, getState, testId),
     mountFrame(document),
     addDepsToDocument,
     writeTestDepsToDocument(frameReady),
+    buildProxyConsole(proxyLogger),
     writeContentToFrame
   );
