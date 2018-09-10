@@ -29,7 +29,6 @@ function Header() {
               News
             </a>
           </li>
-          <li>
           <li className='sign-in-btn'>
 
             <UserState />
