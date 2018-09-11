@@ -6,9 +6,14 @@ import './404.css';
 import notFoundLogo from '../../static/img/freeCodeCamp-404.svg';
 import { quotes } from '../../static/json/quotes.json';
 
-let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+let randomQuote: any = {};
 
-class NotFoundPage extends React.PureComponent {
+class NotFoundPage extends React.Component {
+
+  componentDidMount() {
+    randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  }
+
   render() {
     return (
       <div className='notfound-page-wrapper'>
