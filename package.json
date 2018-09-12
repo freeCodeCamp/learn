@@ -15,6 +15,7 @@
     "browser-cookies": "^1.2.0",
     "chai": "^4.1.2",
     "copy-webpack-plugin": "^4.5.1",
+    "cypress": "^3.1.0",
     "date-fns": "^1.29.0",
     "debug": "^3.1.0",
     "dotenv": "^5.0.1",
@@ -57,6 +58,7 @@
     "redux-observable": "^0.18.0",
     "reselect": "^3.0.1",
     "rxjs": "^5.5.7",
+    "start-server-and-test": "^1.7.1",
     "store": "^2.0.12",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "validator": "^10.3.0",
@@ -81,8 +83,12 @@
     "lint:utils": "eslint ./utils . --fix",
     "pretty": "yarn format && yarn lint",
     "test": "jest src",
-    "test:ci": "yarn format && jest src",
-    "test:watch": "jest --watch src"
+    "test:ci": "yarn format && jest src && yarn test:e2e:ci",
+    "test:watch": "jest --watch src",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "start-server-and-test develop http://localhost:8000 cy:open",
+    "test:e2e:ci": "start-server-and-test develop http://localhost:8000 cy:run"
   },
   "jest": {
     "verbose": true,
