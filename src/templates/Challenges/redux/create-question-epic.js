@@ -50,7 +50,9 @@ function createQuestionEpic(action$, { getState }, { window }) {
         'User Agent is: <code>',
         userAgent,
         '</code>.\n\n',
-        '**Link to the challenge:**\n',
+        '**Challenge:**\n',
+        challengeTitle,
+        '\n**Link to the challenge:**\n',
         href
       ].join('');
       const categories = ['HTML-CSS', 'JavaScript'];
@@ -59,7 +61,6 @@ function createQuestionEpic(action$, { getState }, { window }) {
           '?category=' +
           window.encodeURIComponent(categories[challengeType] || 'Help') +
           '&title=' +
-          window.encodeURIComponent(challengeTitle) +
           '&body=' +
           window.encodeURIComponent(textMessage),
         '_blank'
