@@ -32,6 +32,7 @@ import {
 } from '../redux';
 
 import './classic.css';
+import '../components/test-frame.css';
 
 import decodeHTMLEntities from '../../../../utils/decodeHTMLEntities';
 
