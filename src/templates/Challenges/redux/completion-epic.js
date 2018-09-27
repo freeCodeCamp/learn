@@ -3,51 +3,51 @@ import { empty } from 'rxjs/observable/empty';
 import {
   switchMap,
   retry,
-  map,
   catchError,
   concat,
-  filter
+  filter,
+  tap
 } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { push } from 'react-router-redux';
-
-import { _csrf as csrfToken } from '../../../redux/cookieVaules';
+import { navigate } from 'gatsby';
 
 import {
   backendFormValuesSelector,
-  projectFormVaulesSelector,
+  projectFormValuesSelector,
   submitComplete,
   types,
   challengeMetaSelector,
   challengeTestsSelector,
   closeModal,
-  challengeFilesSelector
+  challengeFilesSelector,
+  updateProjectFormValues
 } from './';
 import {
   userSelector,
   isSignedInSelector,
   openDonationModal,
-  shouldShowDonationSelector
+  shouldShowDonationSelector,
+  updateComplete,
+  updateFailed
 } from '../../../redux/app';
 
-import { postJSON$ } from '../utils/ajax-stream';
+import postUpdate$ from '../utils/postUpdate$';
 import { challengeTypes, submitTypes } from '../../../../utils/challengeTypes';
 
-function postChallenge(url, username, _csrf, challengeInfo) {
-  const body = { ...challengeInfo, _csrf };
-  const saveChallenge = postJSON$(url, body).pipe(
+function postChallenge(update, username) {
+  const saveChallenge = postUpdate$(update).pipe(
     retry(3),
-    map(({ points }) =>
-      submitComplete({
-        username,
-        points,
-        ...challengeInfo
-      })
+    switchMap(({ points }) =>
+      of(
+        submitComplete({
+          username,
+          points,
+          ...update.payload
+        }),
+        updateComplete()
+      )
     ),
-    catchError(err => {
-      console.error(err);
-      return of({ type: 'here is an error' });
-    })
+    catchError(() => of(updateFailed(update)))
   );
   return saveChallenge;
 }
@@ -63,15 +63,15 @@ function submitModern(type, state) {
       const { id } = challengeMetaSelector(state);
       const files = challengeFilesSelector(state);
       const { username } = userSelector(state);
-      return postChallenge(
-        '/external/modern-challenge-completed',
-        username,
-        csrfToken,
-        {
-          id,
-          files
-        }
-      );
+      const challengeInfo = {
+        id,
+        files
+      };
+      const update = {
+        endpoint: '/external/modern-challenge-completed',
+        payload: challengeInfo
+      };
+      return postChallenge(update, username);
     }
   }
   return empty();
@@ -82,18 +82,20 @@ function submitProject(type, state) {
     return empty();
   }
 
-  const { solution, githubLink } = projectFormVaulesSelector(state);
+  const { solution, githubLink } = projectFormValuesSelector(state);
   const { id, challengeType } = challengeMetaSelector(state);
   const { username } = userSelector(state);
   const challengeInfo = { id, challengeType, solution };
   if (challengeType === challengeTypes.backEndProject) {
     challengeInfo.githubLink = githubLink;
   }
-  return postChallenge(
-    '/external/project-completed',
-    username,
-    csrfToken,
-    challengeInfo
+
+  const update = {
+    endpoint: '/external/project-completed',
+    payload: challengeInfo
+  };
+  return postChallenge(update, username).pipe(
+    concat(of(updateProjectFormValues({})))
   );
 }
 
@@ -107,12 +109,12 @@ function submitBackendChallenge(type, state) {
         state
       );
       const challengeInfo = { id, solution };
-      return postChallenge(
-        '/external/backend-challenge-completed',
-        username,
-        csrfToken,
-        challengeInfo
-      );
+
+      const update = {
+        endpoint: '/external/backend-challenge-completed',
+        payload: challengeInfo
+      };
+      return postChallenge(update, username);
     }
   }
   return empty();
@@ -137,7 +139,6 @@ export default function completionEpic(action$, { getState }) {
       const meta = challengeMetaSelector(state);
       const { isDonating } = userSelector(state);
       const { nextChallengePath, introPath, challengeType } = meta;
-      const next = of(push(introPath ? introPath : nextChallengePath));
       const showDonate = isDonating ? empty() : shouldShowDonate(state);
       const closeChallengeModal = of(closeModal('completion'));
       let submitter = () => of({ type: 'no-user-signed-in' });
@@ -155,7 +156,7 @@ export default function completionEpic(action$, { getState }) {
       }
 
       return submitter(type, state).pipe(
-        concat(next),
+        tap(() => navigate(introPath ? introPath : nextChallengePath)),
         concat(closeChallengeModal),
         concat(showDonate),
         filter(Boolean)

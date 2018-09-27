@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'gatsby-link';
+import { Link } from 'gatsby';
 import FCCSearch from 'react-freecodecamp-search';
 
 import NavLogo from './components/NavLogo';
@@ -11,10 +11,12 @@ function Header() {
   return (
     <header>
       <nav id='top-nav'>
-        <a className='home-link' href='https://www.freecodecamp.org'>
-          <NavLogo />
-        </a>
-        <FCCSearch />
+        <ul id='top-left-nav'>
+          <a className='home-link' href='https://freecodecamp.org'>
+            <NavLogo />
+          </a>
+          <FCCSearch />
+        </ul>
         <ul id='top-right-nav'>
           <li className='nav-btn'>
             <Link to='/'>Curriculum</Link>
@@ -30,7 +32,6 @@ function Header() {
             </a>
           </li>
           <li className='sign-in-btn'>
-
             <UserState />
           </li>
         </ul>

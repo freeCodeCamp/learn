@@ -1,4 +1,3 @@
-/* global graphql */
 import React, { Fragment, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -6,6 +5,7 @@ import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { ReflexContainer, ReflexSplitter, ReflexElement } from 'react-reflex';
+import { graphql } from 'gatsby';
 
 import Editor from './Editor';
 import Preview from '../components/Preview';
@@ -33,6 +33,7 @@ import {
 } from '../redux';
 
 import './classic.css';
+import '../components/test-frame.css';
 
 import decodeHTMLEntities from '../../../../utils/decodeHTMLEntities';
 
@@ -70,7 +71,7 @@ const propTypes = {
   }),
   initTests: PropTypes.func.isRequired,
   output: PropTypes.string,
-  pathContext: PropTypes.shape({
+  pageContext: PropTypes.shape({
     challengeMeta: PropTypes.shape({
       nextchallengePath: PropTypes.string
     })
@@ -117,7 +118,7 @@ class ShowClassic extends PureComponent {
       data: {
         challengeNode: { files, title, fields: { tests }, challengeType }
       },
-      pathContext: { challengeMeta }
+      pageContext: { challengeMeta }
     } = this.props;
     createFiles(files);
     initTests(tests);
@@ -142,7 +143,7 @@ class ShowClassic extends PureComponent {
           challengeType
         }
       },
-      pathContext: { challengeMeta }
+      pageContext: { challengeMeta }
     } = this.props;
     if (prevTitle !== currentTitle) {
       updateSuccessMessage(randomCompliment());
