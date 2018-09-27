@@ -5,6 +5,12 @@ superBlock: Front End Libraries
 ---
 ## Introduction to the Front End Libraries Projects
 
-This introduction is a stub
+It's now time to test out the frontend skills learned. This will help to bolster your skills, so don't hesitate to showcase your frontend skills in these projects.
+In this section you will complete the following projects with Bootstrap, Jquery, Sass, React and Redux:
+* A Random Quote Machine
+* A Markdown Previewer
+* A Drum Machine
+* A JavaScript Calculator
+* A Pomodoro Clock
 
-Help us make it real on [GitHub](https://github.com/freeCodeCamp/learn/tree/master/src/introductions).
+Have fun and remember to use the [Read-Search-Ask] (https://forum.freecodecamp.org/t/how-to-get-help-when-you-are-stuck/19514) method if you get stuck.

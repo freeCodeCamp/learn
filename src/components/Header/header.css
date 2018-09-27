@@ -76,7 +76,7 @@ header {
   padding: 10px 0 10px 15px;
 }
 
-.sign-in-btn > a {
+#top-right-nav .sign-in-btn > a {
   padding-top: 0;
 }
 
@@ -128,8 +128,8 @@ header {
   width: auto;
   flex-grow: 1;
 }
-#fcc_instantsearch {
-  height: 25px;
+.ais-SearchBox-input {
+  max-height: 30px;
 }
 .ais-SearchBox-form {
   margin-bottom: 0;

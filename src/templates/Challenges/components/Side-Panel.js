@@ -42,7 +42,7 @@ export class SidePanel extends PureComponent {
     super(props);
     this.bindTopDiv = this.bindTopDiv.bind(this);
     MathJax.Hub.Config({
-      tex2jax: { 
+      tex2jax: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         processEscapes: true,
         processClass: 'rosetta-code'
@@ -51,14 +51,20 @@ export class SidePanel extends PureComponent {
   }
 
   componentDidMount() {
-    MathJax.Hub.Queue(['Typeset', MathJax.Hub,
-    document.querySelector('.rosetta-code')]);
+    MathJax.Hub.Queue([
+      'Typeset',
+      MathJax.Hub,
+      document.querySelector('.rosetta-code')
+    ]);
     this.props.initConsole('');
   }
 
   componentDidUpdate(prevProps) {
-    MathJax.Hub.Queue(['Typeset', MathJax.Hub,
-    document.querySelector('.rosetta-code')]);
+    MathJax.Hub.Queue([
+      'Typeset',
+      MathJax.Hub,
+      document.querySelector('.rosetta-code')
+    ]);
     const { title, initConsole } = this.props;
     if (title !== prevProps.title) {
       initConsole('');
@@ -81,7 +87,7 @@ export class SidePanel extends PureComponent {
         <Spacer />
         <div>
           <ChallengeTitle>{title}</ChallengeTitle>
-          <ChallengeDescription section={section} description={description} />
+          <ChallengeDescription description={description} section={section} />
         </div>
         <ToolPanel guideUrl={guideUrl} />
         <TestSuite tests={tests} />
