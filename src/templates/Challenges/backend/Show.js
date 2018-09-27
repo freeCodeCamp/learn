@@ -1,9 +1,9 @@
-/* global graphql */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { reduxForm } from 'redux-form';
 import { Col, Row } from 'react-bootstrap';
+import { graphql } from 'gatsby';
 
 import ChallengeTitle from '../components/Challenge-Title';
 import ChallengeDescription from '../components/Challenge-Description';
@@ -29,6 +29,8 @@ import {
 } from '../../../components/formHelpers';
 import Spacer from '../../../components/util/Spacer';
 import { createGuideUrl } from '../utils';
+
+import '../components/test-frame.css';
 
 // provided by redux form
 const reduxFormPropTypes = {
@@ -83,7 +85,7 @@ export class BackEnd extends PureComponent {
       initTests,
       updateChallengeMeta,
       data: { challengeNode: { fields: { tests }, challengeType } },
-      pathContext: { challengeMeta }
+      pageContext: { challengeMeta }
     } = this.props;
     initTests(tests);
     updateChallengeMeta({ ...challengeMeta, challengeType });
@@ -97,7 +99,7 @@ export class BackEnd extends PureComponent {
       data: {
         challengeNode: { title: currentTitle, fields: { tests }, challengeType }
       },
-      pathContext: { challengeMeta }
+      pageContext: { challengeMeta }
     } = this.props;
     if (prevTitle !== currentTitle) {
       initTests(tests);
@@ -158,7 +160,7 @@ export class BackEnd extends PureComponent {
           <Spacer />
         </Col>
         <CompletionModal />
-        <HelpModal/>
+        <HelpModal />
       </Row>
     );
   }
