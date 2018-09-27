@@ -170,6 +170,11 @@ class ShowClassic extends PureComponent {
       files,
       output
     } = this.props;
+
+    let tail = null;
+    if(files.indexjs)
+      tail = files.indexjs.tail;
+
     const editors = Object.keys(files)
       .map(key => files[key])
       .map((file, index) => (
@@ -224,6 +229,7 @@ class ShowClassic extends PureComponent {
               guideUrl={createGuideUrl(slug)}
               section={dasherize(blockName)}
               title={blockNameTitle}
+              tail={tail}
             />
           </ReflexElement>
           <ReflexSplitter propagate={true} {...this.resizeProps} />

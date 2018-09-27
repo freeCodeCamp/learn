@@ -26,12 +26,16 @@ function getAccessibleText(err, pass, text) {
   return accessibleText + ' - ' + cleanText;
 }
 
-function TestSuite({ tests }) {
+function TestSuite({tests, tail}) {
   return (
     <div className='challenge-test-suite'>
       {tests.map(({ err, pass = false, text = '' }, index) => {
         const isInitial = !pass && !err;
         const statusIcon = pass && !err ? <GreenPass /> : <Fail />;
+
+        if (tail && text.startsWith("'") && text.endsWith("'")) {
+          text = eval('(function(){ ' + tail + '\n return ' + text + ';})()');
+        }
         return (
           <div
             aria-label={getAccessibleText(err, pass, text)}
