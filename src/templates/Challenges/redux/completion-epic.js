@@ -6,10 +6,11 @@ import {
   map,
   catchError,
   concat,
-  filter
+  filter,
+  tap
 } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { push } from 'react-router-redux';
+import { navigate } from 'gatsby';
 
 import { _csrf as csrfToken } from '../../../redux/cookieVaules';
 
@@ -21,7 +22,8 @@ import {
   challengeMetaSelector,
   challengeTestsSelector,
   closeModal,
-  challengeFilesSelector
+  challengeFilesSelector,
+  updateProjectFormValues
 } from './';
 import {
   userSelector,
@@ -94,6 +96,8 @@ function submitProject(type, state) {
     username,
     csrfToken,
     challengeInfo
+  ).pipe(
+    concat(of(updateProjectFormValues({})))
   );
 }
 
@@ -137,7 +141,6 @@ export default function completionEpic(action$, { getState }) {
       const meta = challengeMetaSelector(state);
       const { isDonating } = userSelector(state);
       const { nextChallengePath, introPath, challengeType } = meta;
-      const next = of(push(introPath ? introPath : nextChallengePath));
       const showDonate = isDonating ? empty() : shouldShowDonate(state);
       const closeChallengeModal = of(closeModal('completion'));
       let submitter = () => of({ type: 'no-user-signed-in' });
@@ -155,7 +158,7 @@ export default function completionEpic(action$, { getState }) {
       }
 
       return submitter(type, state).pipe(
-        concat(next),
+        tap(() => navigate(introPath ? introPath : nextChallengePath)),
         concat(closeChallengeModal),
         concat(showDonate),
         filter(Boolean)
