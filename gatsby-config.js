@@ -19,7 +19,8 @@ module.exports = {
       resolve: 'fcc-source-challenges',
       options: {
         name: 'challenges',
-        path: path.resolve(__dirname, './seed/challenges'),
+        path: require.resolve('@freecodecamp/curriculum')
+          .replace('/index.js', '').concat('/challenges/'),
         source: buildChallenges$
       }
     },

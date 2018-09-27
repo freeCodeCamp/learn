@@ -17,6 +17,8 @@ function createChallengeNodes(challenge, reporter) {
     type: 'ChallengeNode'
   };
 
+// NOTE: Due to the assignment sequence, challenge.id does not get
+// ' >>>> ChallengeNode' appended.  Swap them?
   /* eslint-disable prefer-object-spread/prefer-object-spread */
   return JSON.parse(
     JSON.stringify(
