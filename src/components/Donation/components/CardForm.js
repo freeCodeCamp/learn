@@ -44,9 +44,10 @@ class CardForm extends PureComponent {
           bsSize='lg'
           bsStyle='primary'
           disabled={!isFormValid}
+          id='confirm-donation-btn'
           type='submit'
           >
-          {`Confirm Monthly Donation of $${amount}`}
+          {`Confirm your donation of $${amount} / month`}
         </Button>
       </form>
     );

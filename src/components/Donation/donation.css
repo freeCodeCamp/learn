@@ -104,3 +104,8 @@
   font-size: 18px;
   cursor: pointer;
 }
+
+#confirm-donation-btn {
+  font-size: 1.2rem;
+  height: 75px;
+}

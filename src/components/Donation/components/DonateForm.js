@@ -33,24 +33,10 @@ class DonateForm extends PureComponent {
       email: props.email
     };
 
-    this.buttonAmounts = [500, 1000, 3500, 5000, 25000];
-
-    this.handleAmountClick = this.handleAmountClick.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.isActive = this.isActive.bind(this);
-    this.renderAmountButtons = this.renderAmountButtons.bind(this);
     this.postDonation = this.postDonation.bind(this);
     this.resetDonation = this.resetDonation.bind(this);
-  }
-
-  handleAmountClick(e) {
-    e.preventDefault();
-    const donationAmount = parseInt(e.target.id, 10);
-    return this.setState(state => ({
-      ...state,
-      donationAmount
-    }));
   }
 
   handleEmailChange(e) {
@@ -89,10 +75,6 @@ class DonateForm extends PureComponent {
     });
   }
 
-  isActive(amount) {
-    return this.state.donationAmount === amount;
-  }
-
   postDonation(token) {
     const { donationAmount: amount } = this.state;
     this.setState(state => ({
@@ -129,34 +111,26 @@ class DonateForm extends PureComponent {
     );
   }
 
-  renderAmountButtons() {
-    return this.buttonAmounts.map(amount => (
-      <li key={'amount-' + amount}>
-        <a
-          className={`amount-value ${this.isActive(amount) ? 'active' : ''}`}
-          href=''
-          id={amount}
-          onClick={this.handleAmountClick}
-          tabIndex='-1'
-          >{`$${amount / 100}`}</a>
-      </li>
-    ));
-  }
-
   renderDonateForm() {
     return (
       <Fragment>
-        <p>
-          freeCodeCamp is completely free. But it costs our nonprofit a lot of
-          money to run it. Help us pay for servers. Set up a tax-deductible
-          monthly donation you can afford.
-        </p>
-        <div id='donate-amount-panel'>
-          <ul>{this.renderAmountButtons()}</ul>
+        <div className='text-center'>
+          <p>
+            freeCodeCamp.org is completely free.
+          </p>
+          <p>
+            But it costs our nonprofit a lot of money to run all this.
+          </p>
+          <p>
+            Join the <strong>4,102</strong> people who donate $5 / month.
+          </p>
+          <p>
+            Let's build this community together.
+          </p>
         </div>
         {this.renderEmailInput()}
         <CardForm
-          amount={this.state.donationAmount / 100}
+          amount={5}
           handleSubmit={this.handleSubmit}
         />
         {this.props.maybeButton()}
@@ -169,7 +143,7 @@ class DonateForm extends PureComponent {
     return (
       <div className='donation-email-container'>
         <label>
-          Email where we should send your donation tax receipt:
+          Email (we'll send you a tax-deductible donation receipt):
           <input
             onChange={this.handleEmailChange}
             placeholder='email@example.com'
