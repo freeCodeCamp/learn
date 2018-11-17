@@ -68,8 +68,8 @@ export const shouldShowDonationSelector = state => {
   if (completedChallenges.length === 9) {
     return true;
   }
-  // this will mean we are on the 3rd submission for this browser session
-  if (completionCount === 2) {
+  // this will mean we are on the 1st submission for this browser session
+  if (completionCount === 0) {
     return true;
   }
   return false;
