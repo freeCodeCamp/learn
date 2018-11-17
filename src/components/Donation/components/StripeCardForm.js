@@ -78,7 +78,7 @@ class StripCardForm extends PureComponent {
           <CardNumberElement onChange={this.handleInputChange} style={style} />
         </FormGroup>
         <FormGroup>
-          <ControlLabel>Card Expiry:</ControlLabel>
+          <ControlLabel>Card Expires:</ControlLabel>
           <CardExpiryElement onChange={this.handleInputChange} style={style} />
         </FormGroup>
         <FormGroup>

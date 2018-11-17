@@ -146,11 +146,20 @@ class DonateForm extends PureComponent {
   renderDonateForm() {
     return (
       <Fragment>
-        <p>
-          freeCodeCamp is completely free. But it costs our nonprofit a lot of
-          money to run it. Help us pay for servers. Set up a tax-deductible
-          monthly donation you can afford.
-        </p>
+        <div className='text-center'>
+          <p>
+            freeCodeCamp is completely free.
+          </p>
+          <p>
+            But it costs our nonprofit a lot of money to run all this.
+          </p>
+          <p>
+            Join the 4,102 people who support our 501(c)(3) nonprofit. Set up a $5 per month tax-deductible donation.
+          </p>
+          <p>
+            Let's build this community together.
+          </p>
+        </div>
         <div id='donate-amount-panel'>
           <ul>{this.renderAmountButtons()}</ul>
         </div>
