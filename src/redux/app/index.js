@@ -59,6 +59,7 @@ export const shouldShowDonationSelector = state => {
   const completedChallenges = completedChallengesSelector(state);
   const completionCount = completionCountSelector(state);
   const currentCompletedLength = completedChallenges.length;
+
   // the user has not completed 9 challenges in total yet
   if (currentCompletedLength < 9) {
     return false;
@@ -72,6 +73,7 @@ export const shouldShowDonationSelector = state => {
     return true;
   }
   return false;
+
 };
 
 export const reducer = handleActions(

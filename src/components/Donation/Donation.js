@@ -38,6 +38,7 @@ const propTypes = {
   show: PropTypes.bool
 };
 
+// Stripe public key
 const stripeKey = 'pk_live_E6Z6xPM8pEsJziHW905zpAvF';
 
 class DonationModal extends PureComponent {
@@ -98,7 +99,7 @@ class DonationModal extends PureComponent {
           <Modal bsSize='lg' className='donation-modal' show={show}>
             <Modal.Header className='fcc-modal'>
               <Modal.Title className='text-center'>
-                Support Our NonProfit
+                Support Our Nonprofit
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>

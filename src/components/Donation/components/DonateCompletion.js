@@ -17,7 +17,7 @@ function DonateCompletion({ close, processing, reset, success, error = null }) {
   const heading = processing
     ? 'We are processing your donation'
     : success
-      ? 'Donation successful. Thank you for supporting the freeCodeCamp ' +
+      ? 'Donation successful. Thank you for supporting the freeCodeCamp.org ' +
         'community!'
       : 'Something went wrong with your donation';
   return (
