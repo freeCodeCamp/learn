@@ -122,7 +122,7 @@ class DonateForm extends PureComponent {
             But it costs our nonprofit a lot of money to run all this.
           </p>
           <p>
-            Join the <strong>4,102</strong> people who donate $5 / month.
+            Join the <strong>3,926</strong> people who donate $5 / month.
           </p>
           <p>
             Let's build this community together.
