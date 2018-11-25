@@ -116,16 +116,10 @@ class DonateForm extends PureComponent {
       <Fragment>
         <div className='text-center'>
           <p>
-            freeCodeCamp.org is completely free.
-          </p>
-          <p>
-            But it costs our nonprofit a lot of money to run all this.
-          </p>
-          <p>
-            Join the <strong>3,926</strong> people who donate $5 / month.
-          </p>
-          <p>
-            Let's build this community together.
+            freeCodeCamp.org is a tiny nonprofit that's helping millions
+            of people learn to code for free. Join <strong>3,926</strong> supporters.
+            Your $5 / month donation will help keep tech education
+            free and open.
           </p>
         </div>
         {this.renderEmailInput()}
