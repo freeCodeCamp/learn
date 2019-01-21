@@ -117,7 +117,7 @@ class DonateForm extends PureComponent {
         <div className='text-center'>
           <p>
             freeCodeCamp.org is a tiny nonprofit that's helping millions
-            of people learn to code for free. Join <strong>4,116</strong> supporters.
+            of people learn to code for free. Join <strong>4,180</strong> supporters.
             Your $5 / month donation will help keep tech education
             free and open.
           </p>
