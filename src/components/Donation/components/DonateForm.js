@@ -4,6 +4,8 @@ import isEmail from 'validator/lib/isEmail';
 
 import CardForm from './CardForm';
 import { injectStripe } from 'react-stripe-elements';
+import { ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
+
 import { postJSON$ } from '../../../templates/Challenges/utils/ajax-stream';
 
 const propTypes = {
@@ -116,10 +118,15 @@ class DonateForm extends PureComponent {
       <Fragment>
         <div className='text-center'>
           <p>
-            freeCodeCamp.org is a tiny nonprofit that's helping millions
-            of people learn to code for free. Join <strong>4,499</strong> supporters.
-            Your $5 / month donation will help keep tech education
-            free and open.
+            freeCodeCamp.org is a tiny nonprofit that's helping millions of
+            people learn to code for free.
+          </p>
+          <p>
+            Join <strong>4,116</strong> supporters.
+          </p>
+          <p>
+            Your $5 / month donation will help keep tech education free and
+            open.
           </p>
         </div>
         {this.renderEmailInput()}
@@ -135,18 +142,18 @@ class DonateForm extends PureComponent {
   renderEmailInput() {
     const { email } = this.state;
     return (
-      <div className='donation-email-container'>
-        <label>
-          Email (we'll send you a tax-deductible donation receipt):
-          <input
+      <FormGroup className='donation-email-container'>
+          <ControlLabel>
+            Email (we'll send you a tax-deductible donation receipt):
+          </ControlLabel>
+          <FormControl
             onChange={this.handleEmailChange}
             placeholder='email@example.com'
             required={true}
             type='email'
             value={email}
           />
-        </label>
-      </div>
+      </FormGroup>
     );
   }
 

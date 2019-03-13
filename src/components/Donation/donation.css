@@ -1,5 +1,5 @@
 .donation-modal {
-  font-size: 1.2rem;
+  font-size: 18px;
 }
 
 .donation-modal p {
@@ -19,6 +19,10 @@
   justify-content: center;
   margin: 0 auto;
   height: 300px;
+}
+
+.donation-form input{
+  color:#006400 !important; 
 }
 
 #donate-amount-panel ul {
@@ -73,8 +77,8 @@
 }
 
 .donation-email-container {
+  font-size: 18px;
   width: 80%;
-  margin: 0 auto;
 }
 
 .donation-email-container label {
@@ -85,8 +89,19 @@
 .donation-email-container input {
   color: #006400;
   font-weight: normal;
-  border: none;
 }
+
+.donation-email-container.form-group{
+  font-size: 18px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.donation-email-container .form-control{
+  font-size: 18px;
+}
+
+
 
 .maybe-later-container {
   width: 80%;
@@ -108,4 +123,11 @@
 #confirm-donation-btn {
   font-size: 1.2rem;
   height: 75px;
+}
+
+.StripeElement--focus {
+  border-color: #66afe9;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(102, 175, 233, 0.6);
 }
