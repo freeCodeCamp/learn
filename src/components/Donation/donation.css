@@ -22,7 +22,7 @@
 }
 
 .donation-form input{
-  color:#006400 !important; 
+  color:#006400 !important;
 }
 
 #donate-amount-panel ul {
@@ -101,8 +101,6 @@
   font-size: 18px;
 }
 
-
-
 .maybe-later-container {
   width: 80%;
   margin: 50px auto 0;
@@ -130,4 +128,15 @@
   outline: 0;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
     0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.GoogleDisclaimer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.GoogleDisclaimer h6 {
+  font-size: 12px;
 }

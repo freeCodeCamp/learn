@@ -51,6 +51,7 @@
     "react-spinkit": "^3.0.0",
     "react-stripe-elements": "^2.0.0",
     "react-test-renderer": "^16.3.1",
+    "reaptcha": "^1.4.2",
     "redux": "^3.7.2",
     "redux-actions": "^2.3.0",
     "redux-form": "5",

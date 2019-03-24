@@ -8985,6 +8985,11 @@ realpath-native@^1.0.0:
   dependencies:
     util.promisify "^1.0.0"
 
+reaptcha@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/reaptcha/-/reaptcha-1.4.2.tgz#c54596e8035559b74ac97581967c10358d50cb7b"
+  integrity sha512-6/330ut6xac+M4KMmzFO8FwMQ+bZMpriiEjqSzIrfCYdjR7fa5C+pcnJYSWysHdcYuZi70Hfrca/+TYwQpAwpw==
+
 rechoir@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/rechoir/-/rechoir-0.6.2.tgz#85204b54dba82d5742e28c96756ef43af50e3384"

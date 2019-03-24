@@ -109,7 +109,18 @@ class DonationModal extends PureComponent {
                 renderCompletion={this.renderCompletion}
               />
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className='GoogleDisclaimer'>
+              <h6>
+                This site is protected by reCAPTCHA and the Google
+                <a href='https://policies.google.com/privacy'>
+                  {'  '}privacy policy{'  '}
+                </a>
+                and
+                <a href='https://policies.google.com/terms'>
+                  {'  '}terms of service{'  '}
+                </a>
+                apply.
+              </h6>
               <img src={poweredByStripe} />
             </Modal.Footer>
           </Modal>
