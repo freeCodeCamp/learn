@@ -60,7 +60,7 @@ class CardForm extends PureComponent {
           block={true}
           bsSize='lg'
           bsStyle='primary'
-          disabled={!isFormValid && !isCaptchaReady}
+          disabled={!isFormValid || !isCaptchaReady}
           id='confirm-donation-btn'
           type='submit'
           >
