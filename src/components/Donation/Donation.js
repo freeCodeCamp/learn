@@ -112,11 +112,19 @@ class DonationModal extends PureComponent {
             <Modal.Footer className='GoogleDisclaimer'>
               <h6>
                 This site is protected by reCAPTCHA and the Google
-                <a href='https://policies.google.com/privacy'>
+                <a
+                  href='https://policies.google.com/privacy'
+                  rel='noopener noreferrer'
+                  target='_blank'
+                  >
                   {'  '}privacy policy{'  '}
                 </a>
                 and
-                <a href='https://policies.google.com/terms'>
+                <a
+                  href='https://policies.google.com/terms'
+                  rel='noopener noreferrer'
+                  target='_blank'
+                  >
                   {'  '}terms of service{'  '}
                 </a>
                 apply.

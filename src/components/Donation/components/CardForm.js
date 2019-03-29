@@ -23,8 +23,6 @@ class CardForm extends PureComponent {
 
     this.getValidationState = this.getValidationState.bind(this);
     this.submit = this.submit.bind(this);
-    this.onVerify = this.onVerify.bind(this);
-    this.onLoad = this.onLoad.bind(this);
   }
 
   onVerify = (captchaToken) => {
