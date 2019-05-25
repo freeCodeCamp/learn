@@ -47,9 +47,9 @@ function createQuestionEpic(action$, { getState }, { window }) {
         '**Your code so far**\n',
         filesToMarkdown(files),
         '**Your browser information:**\n\n',
-        'User Agent is: <code>',
+        'User Agent is: `',
         userAgent,
-        '</code>.\n\n',
+        '`.\n\n',
         '**Link to the challenge:**\n',
         href
       ].join('');
