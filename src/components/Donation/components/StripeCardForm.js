@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import {
-  CardNumberElement,
-  CardExpiryElement,
-  CardCVCElement
+  CardElement
 } from 'react-stripe-elements';
 import { ControlLabel, FormGroup } from 'react-bootstrap';
 
@@ -24,15 +22,7 @@ class StripCardForm extends PureComponent {
 
     this.state = {
       validation: {
-        cardNumber: {
-          complete: false,
-          error: null
-        },
-        cardExpiry: {
-          complete: false,
-          error: null
-        },
-        cardCvc: {
+        card: {
           complete: false,
           error: null
         }
@@ -75,24 +65,8 @@ class StripCardForm extends PureComponent {
     return (
       <div className='donation-elements'>
         <FormGroup>
-          <ControlLabel>Your Card Number:</ControlLabel>
-          <CardNumberElement
-            className='form-control donate-input-element'
-            onChange={this.handleInputChange}
-            style={style}
-          />
-        </FormGroup>
-        <FormGroup>
-          <ControlLabel>Your Card Expiration Month:</ControlLabel>
-          <CardExpiryElement
-            className='form-control donate-input-element'
-            onChange={this.handleInputChange}
-            style={style}
-          />
-        </FormGroup>
-        <FormGroup>
-          <ControlLabel>Your Card CVC (3-digit security number):</ControlLabel>
-          <CardCVCElement
+          <ControlLabel>Card Details:</ControlLabel>
+          <CardElement
             className='form-control donate-input-element'
             onChange={this.handleInputChange}
             style={style}
