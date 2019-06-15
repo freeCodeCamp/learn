@@ -18,7 +18,6 @@
   width:80%;
   justify-content: center;
   margin: 0 auto;
-  height: 300px;
 }
 
 .donation-form input{
@@ -120,7 +119,6 @@
 
 #confirm-donation-btn {
   font-size: 1.2rem;
-  height: 75px;
 }
 
 .StripeElement--focus {
