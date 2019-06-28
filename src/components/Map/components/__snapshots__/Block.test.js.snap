@@ -38,7 +38,6 @@ exports[`<Block expanded snapshot: block-expanded 1`] = `
         className="badge map-badge"
       />
       <Unknown
-        onClick={[Function]}
         to="/super-block-one/block-a"
       >
         Introduction to Block A
@@ -61,7 +60,6 @@ exports[`<Block expanded snapshot: block-expanded 1`] = `
         />
       </span>
       <Unknown
-        onClick={[Function]}
         to="/super-block-one/block-a/challenge-one"
       >
         Challenge One
@@ -84,7 +82,6 @@ exports[`<Block expanded snapshot: block-expanded 1`] = `
         />
       </span>
       <Unknown
-        onClick={[Function]}
         to="/super-block-one/block-a/challenge-two"
       >
         Challenge Two
@@ -107,7 +104,6 @@ exports[`<Block expanded snapshot: block-expanded 1`] = `
         />
       </span>
       <Unknown
-        onClick={[Function]}
         to="/super-block-one/block-a/challenge-one"
       >
         Challenge One
@@ -130,7 +126,6 @@ exports[`<Block expanded snapshot: block-expanded 1`] = `
         />
       </span>
       <Unknown
-        onClick={[Function]}
         to="/super-block-one/block-a/challenge-two"
       >
         Challenge Two

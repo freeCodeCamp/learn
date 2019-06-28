@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Helmet from 'react-helmet';
 
-import ga from '../analytics';
-
 import Header from '../components/Header';
 import DonationModal from '../components/Donation';
 import { fetchUser, userSelector } from '../redux/app';
@@ -60,7 +58,6 @@ class Layout extends PureComponent {
   componentDidMount() {
     this.props.fetchUser();
     const url = window.location.pathname + window.location.search;
-    ga.pageview(url);
     /* eslint-disable react/no-did-mount-set-state */
     // this is for local location tracking only, no re-rendering required
     this.setState(state => ({
@@ -71,7 +68,6 @@ class Layout extends PureComponent {
   componentDidUpdate() {
     const url = window.location.pathname + window.location.search;
     if (url !== this.state.location) {
-      ga.pageview(url);
       /* eslint-disable react/no-did-update-set-state */
       // this is for local location tracking only, no re-rendering required
       this.setState(state => ({

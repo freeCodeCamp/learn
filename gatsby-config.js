@@ -68,6 +68,15 @@ module.exports = {
         fonts: ['Lato:400,400i,500']
       }
     },
+    {
+      resolve: `gatsby-plugin-google-tagmanager`,
+      options: {
+        id: "GTM-5D6RKKP",
+        // Include GTM in development.
+        // Defaults to false meaning GTM will only be loaded in production.
+        includeInDevelopment: false,
+      },
+    },
     'gatsby-plugin-sitemap'
   ]
 };

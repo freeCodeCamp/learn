@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Button, Modal } from 'react-bootstrap';
 
-import ga from '../../../analytics';
 import GreenPass from './icons/GreenPass';
 
 import { dasherize } from '../../../../utils';
@@ -70,9 +69,6 @@ export class CompletionModal extends PureComponent {
       files = {},
       title
     } = this.props;
-    if (isOpen) {
-      ga.modalview('/completion-modal');
-    }
     const showDownloadButton = Object.keys(files).length;
     const filesForDownload = Object.keys(files)
       .map(key => files[key])
