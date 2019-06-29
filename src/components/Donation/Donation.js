@@ -6,7 +6,6 @@ import { createSelector } from 'reselect';
 import { Modal } from 'react-bootstrap';
 import { StripeProvider, Elements } from 'react-stripe-elements';
 
-import ga from '../../analytics';
 import DonateForm from './components/DonateForm';
 import DonateCompletion from './components/DonateCompletion';
 import {
@@ -90,9 +89,6 @@ class DonationModal extends PureComponent {
 
   render() {
     const { email, show } = this.props;
-    if (show) {
-      ga.modalview('/donation-modal');
-    }
     return (
       <StripeProvider stripe={this.state.stripe}>
         <Elements>

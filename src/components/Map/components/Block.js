@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import Link from 'gatsby-link';
 
-import ga from '../../../analytics';
 import { makeExpandedBlockSelector, toggleBlock } from '../redux';
 import { userSelector } from '../../../redux/app';
 import Caret from '../../icons/Caret';
@@ -51,26 +50,12 @@ export class Block extends PureComponent {
     super(...props);
 
     this.handleBlockClick = this.handleBlockClick.bind(this);
-    this.handleChallengeClick = this.handleChallengeClick.bind(this);
     this.renderChallenges = this.renderChallenges.bind(this);
   }
 
   handleBlockClick() {
     const { blockDashedName, toggleBlock } = this.props;
-    ga.event({
-      category: 'Map Block Click',
-      action: blockDashedName
-    });
     return toggleBlock(blockDashedName);
-  }
-
-  handleChallengeClick(slug) {
-    return () => {
-      return ga.event({
-        category: 'Map Challenge Click',
-        action: slug
-      });
-    };
   }
 
   renderCheckMark(isCompleted) {
@@ -92,14 +77,11 @@ export class Block extends PureComponent {
         <li
           className={'map-challenge-title' + completedClass}
           key={'map-challenge' + challenge.fields.slug}
-          >
-          <span className='badge map-badge'>
+        >
+          <span className="badge map-badge">
             {i !== 0 && this.renderCheckMark(challenge.isCompleted)}
           </span>
-          <Link
-            onClick={this.handleChallengeClick(challenge.fields.slug)}
-            to={challenge.fields.slug}
-            >
+          <Link to={challenge.fields.slug}>
             {challenge.title || challenge.frontmatter.title}
           </Link>
         </li>
@@ -119,7 +101,7 @@ export class Block extends PureComponent {
     });
     return (
       <li className={`block ${isExpanded ? 'open' : ''}`}>
-        <div className='map-title' onClick={this.handleBlockClick}>
+        <div className="map-title" onClick={this.handleBlockClick}>
           <Caret />
           <h5>{blockName}</h5>
         </div>
