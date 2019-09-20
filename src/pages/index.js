@@ -34,10 +34,10 @@ const IndexPage = ({
   }
 }) => (
   <div className='index-page-wrapper'>
-    <Helmet title='Welcome to learn.freeCodeCamp!' />
+    <Helmet title='Learn' />
     <Spacer />
     <Spacer />
-    <h2>Welcome to the freeCodeCamp curriculum</h2>
+    <h2>Welcome to freeCodeCamp.org</h2>
     <p>We have thousands of coding lessons to help you improve your skills.</p>
     <p>You can earn each certification by completing its 5 final projects.</p>
     <p>
